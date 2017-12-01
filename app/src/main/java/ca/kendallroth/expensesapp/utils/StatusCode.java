@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.utils;
+package ca.kendallroth.expensesapp.utils;
 
 /**
  * Utility enum to designate the status code of a response

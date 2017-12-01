@@ -1,22 +1,18 @@
-package ca.kendallroth.mileageapp;
+package ca.kendallroth.expensesapp;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-
-import ca.kendallroth.mileageapp.utils.AuthUtils;
-import ca.kendallroth.mileageapp.utils.Response;
-import ca.kendallroth.mileageapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.AuthUtils;
+import ca.kendallroth.expensesapp.utils.Response;
+import ca.kendallroth.expensesapp.utils.XMLFileUtils;
 
 /**
  * Custom Application class to handle checking for authentication file on app start.
  *   Taken from https://stackoverflow.com/questions/7360846/how-can-i-execute-something-just-once-per-application-start
  */
-public class MileageApp extends Application {
+public class ExpensesApp extends Application {
 
   // Expose the app context
   private static Context appContext;
@@ -25,7 +21,7 @@ public class MileageApp extends Application {
     return appContext;
   }
 
-  public MileageApp() {
+  public ExpensesApp() {
     super();
   }
 
@@ -57,7 +53,7 @@ public class MileageApp extends Application {
     Response createAuthFileResponse = AuthUtils.createAuthFile();
 
     // TODO: Do something with response
-    Log.d("MileageApp.auth", String.format("checkAuthenticationFile response: %s", createAuthFileResponse.toString()));
+    Log.d("ExpensesApp.auth", String.format("checkAuthenticationFile response: %s", createAuthFileResponse.toString()));
   }
 
   /**
@@ -71,7 +67,7 @@ public class MileageApp extends Application {
     String authFileStatus = authFileExists
         ? "Authentication file already exists"
         : "Authentication file doesn't exist";
-    Log.d("MileageApp", authFileStatus);
+    Log.d("ExpensesApp", authFileStatus);
 
     return authFileExists;
   }

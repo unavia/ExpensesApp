@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.utils;
+package ca.kendallroth.expensesapp.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,8 +10,8 @@ import org.dom4j.Node;
 
 import java.util.List;
 
-import ca.kendallroth.mileageapp.MileageApp;
-import ca.kendallroth.mileageapp.R;
+import ca.kendallroth.expensesapp.ExpensesApp;
+import ca.kendallroth.expensesapp.R;
 
 /**
  * Utility functions for authorization workflows
@@ -24,7 +24,7 @@ public abstract class AuthUtils {
   // Static response for invalid file context (if not set)
   private static Response invalidFileContext = new Response(
       StatusCode.FAILURE,
-      MileageApp.getContext().getString(R.string.code_failure_file_context)
+      ExpensesApp.getContext().getString(R.string.code_failure_file_context)
   );
 
 
@@ -50,12 +50,12 @@ public abstract class AuthUtils {
       responseStatus = StatusCode.SUCCESS;
       responseString = "code_success_init_account_file";
 
-      Log.d("MileageApp.auth", "Creating empty authentication file was successful");
+      Log.d("ExpensesApp.auth", "Creating empty authentication file was successful");
     } catch (Exception e) {
       responseStatus = StatusCode.FAILURE;
       responseString = "code_failure_init_account_file_parse";
 
-      Log.d("MileageApp.auth", "Creating authentication file failed with a file parsing error");
+      Log.d("ExpensesApp.auth", "Creating authentication file failed with a file parsing error");
     }
 
     return new Response(responseStatus, responseString);
@@ -113,13 +113,13 @@ public abstract class AuthUtils {
       }
 
       String addStatus = !doesUserExist ? " was successful" : " failed because the account already existed";
-      Log.d("MileageApp.auth", String.format("Adding account for email '%s' and password '%s' %s", email, password, addStatus));
+      Log.d("ExpensesApp.auth", String.format("Adding account for email '%s' and password '%s' %s", email, password, addStatus));
     } catch (Exception e) {
       // Return a failure status (no match) if the file parsing fails or throws an exception
       responseStatus = StatusCode.FAILURE;
       responseString = "code_failure_add_account_file_parse";
 
-      Log.d("MileageApp.auth", String.format("Adding account for email '%s' failed with a file parsing error", email));
+      Log.d("ExpensesApp.auth", String.format("Adding account for email '%s' failed with a file parsing error", email));
     }
 
     return new Response(responseStatus, responseString);
@@ -189,13 +189,13 @@ public abstract class AuthUtils {
           break;
       }
 
-      Log.d("MileageApp.auth", String.format("Removing account for email '%s' and password '%s' %s", email, password, removalStatus));
+      Log.d("ExpensesApp.auth", String.format("Removing account for email '%s' and password '%s' %s", email, password, removalStatus));
     } catch (Exception e) {
       // Return a failure status (no match) if the file parsing fails or throws an exception
       responseStatus = StatusCode.FAILURE;
       responseString = "code_failure_remove_account_file_parse";
 
-      Log.d("MileageApp.auth", String.format("Removing account for email '%s' failed with a file parsing error", email));
+      Log.d("ExpensesApp.auth", String.format("Removing account for email '%s' failed with a file parsing error", email));
     }
 
     return new Response(responseStatus, responseString);
@@ -212,7 +212,7 @@ public abstract class AuthUtils {
   public static Response updateAuthUserPassword(String email, String newPassword, String oldPassword) {
     if (fileContext == null) return invalidFileContext;
 
-    return new Response(null, MileageApp.getContext().getString(R.string.code_method_not_implemented));
+    return new Response(null, ExpensesApp.getContext().getString(R.string.code_method_not_implemented));
   }
 
 
@@ -259,13 +259,13 @@ public abstract class AuthUtils {
       }
 
       String resetStatus = responseStatus == StatusCode.SUCCESS ? "was successful" : "did not complete (no account)";
-      Log.d("MileageApp.auth", String.format("Password reset for email '%s' %s", email, resetStatus));
+      Log.d("ExpensesApp.auth", String.format("Password reset for email '%s' %s", email, resetStatus));
     } catch (Exception e) {
       // Return a failure status (no match) if the file parsing fails or throws an exception
       responseStatus = StatusCode.FAILURE;
       responseString = "code_failure_password_reset_file_parse";
 
-      Log.d("MileageApp.auth", String.format("Password reset for email '%s' failed with a file parsing error", email));
+      Log.d("ExpensesApp.auth", String.format("Password reset for email '%s' failed with a file parsing error", email));
     }
 
     return new Response(responseStatus, responseString);
@@ -301,13 +301,13 @@ public abstract class AuthUtils {
       responseStatus = StatusCode.SUCCESS;
       responseString = "code_success_auth_file_reset";
 
-      Log.d("MileageApp.auth", "Authentication file reset");
+      Log.d("ExpensesApp.auth", "Authentication file reset");
     } catch (Exception e) {
       // Return a failure status (no match) if the file parsing fails or throws an exception
       responseStatus = StatusCode.FAILURE;
       responseString = "code_failure_auth_file_reset_file_parse";
 
-      Log.d("MileageApp.auth", "Authentication file reset failed with a file parsing error");
+      Log.d("ExpensesApp.auth", "Authentication file reset failed with a file parsing error");
     }
 
     return new Response(responseStatus, responseString);

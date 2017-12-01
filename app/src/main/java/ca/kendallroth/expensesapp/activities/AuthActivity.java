@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.activities;
+package ca.kendallroth.expensesapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import ca.kendallroth.mileageapp.fragments.LoginFragment;
-import ca.kendallroth.mileageapp.fragments.LoginFragment.ILoginAttemptListener;
-import ca.kendallroth.mileageapp.fragments.RegisterFragment;
-import ca.kendallroth.mileageapp.fragments.RegisterFragment.IAccountCreateListener;
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.components.ContentSwitcher;
-import ca.kendallroth.mileageapp.adapters.AccountTabAdapter;
+import ca.kendallroth.expensesapp.fragments.LoginFragment;
+import ca.kendallroth.expensesapp.fragments.LoginFragment.ILoginAttemptListener;
+import ca.kendallroth.expensesapp.fragments.RegisterFragment;
+import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListener;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.components.ContentSwitcher;
+import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
 
 /**
  * Authorization activity that displays Login and Register workflows in a ViewPager
@@ -72,7 +72,7 @@ public class AuthActivity extends AppCompatActivity implements IAccountCreateLis
   public void onAccountCreateRequest(String email, String password) {
     // TODO: Do something here with account creation
 
-    Log.d("MileageApp", String.format("onAccountCreateRequest for '%s' with credentials '%s'", email, password));
+    Log.d("ExpensesApp", String.format("onAccountCreateRequest for '%s' with credentials '%s'", email, password));
 
     // Set to the login page fragment
     mContentSwitcher.setPage(0);

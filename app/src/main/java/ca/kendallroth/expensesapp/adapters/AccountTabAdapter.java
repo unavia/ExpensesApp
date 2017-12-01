@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.adapters;
+package ca.kendallroth.expensesapp.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

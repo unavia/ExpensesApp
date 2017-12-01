@@ -1,10 +1,10 @@
-package ca.kendallroth.mileageapp.activities;
+package ca.kendallroth.expensesapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.fragments.SettingsFragment;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.fragments.SettingsFragment;
 
 /**
  * Settings activity that displays the Preferences fragment

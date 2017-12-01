@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.activities;
+package ca.kendallroth.expensesapp.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,9 +24,9 @@ import org.dom4j.Node;
 
 import java.util.List;
 
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.utils.AccountUtils;
-import ca.kendallroth.mileageapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.XMLFileUtils;
 
 /**
  * Reset password activity that enables a user to reset their password
@@ -238,7 +238,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-      Log.d("MileageApp", String.format("Password reset attempt from '%s'", mEmail));
+      Log.d("ExpensesApp", String.format("Password reset attempt from '%s'", mEmail));
 
       // TODO: attempt authentication against a network service.
       try {
@@ -274,7 +274,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
           }
         }
 
-        Log.d("MileageApp.auth", String.format("Password reset for email %s", passwordResetSuccessful ? "successful" : "failed"));
+        Log.d("ExpensesApp.auth", String.format("Password reset for email %s", passwordResetSuccessful ? "successful" : "failed"));
 
         return passwordResetSuccessful;
       } catch (Exception e) {

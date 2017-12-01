@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MileageApp</string>
+    <string name="app_name">ExpensesApp</string>
 
     <!-- Menu actions -->
     <string name="action_app_info">About App</string>

@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.fragments;
+package ca.kendallroth.expensesapp.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,13 +28,13 @@ import org.dom4j.Node;
 
 import java.util.List;
 
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.activities.RequestPasswordResetActivity;
-import ca.kendallroth.mileageapp.activities.ResetPasswordActivity;
-import ca.kendallroth.mileageapp.utils.AccountUtils;
-import ca.kendallroth.mileageapp.utils.ClearableFragment;
-import ca.kendallroth.mileageapp.utils.ScrollableFragment;
-import ca.kendallroth.mileageapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.activities.RequestPasswordResetActivity;
+import ca.kendallroth.expensesapp.activities.ResetPasswordActivity;
+import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.ClearableFragment;
+import ca.kendallroth.expensesapp.utils.ScrollableFragment;
+import ca.kendallroth.expensesapp.utils.XMLFileUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -351,7 +351,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
 
     // Start the Reset Password activity if the result was a success
     if (success) {
-      Log.d("MileageApp", emailAccount);
+      Log.d("ExpensesApp", emailAccount);
 
       startResetPasswordActivity(emailAccount);
     } else {
@@ -416,14 +416,14 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
         // Select all the "user" nodes in the document
         List<Node> users = document.selectNodes("/users/user");
 
-        Log.d("MileageApp", String.format("Login attempt from '%s' with password '%s'", mEmail, mPassword));
+        Log.d("ExpensesApp", String.format("Login attempt from '%s' with password '%s'", mEmail, mPassword));
 
         for (Node user : users) {
           // Compare the entered email and password against the "registered" accounts
           if (user.valueOf("@email").equals(mEmail)) {
             boolean validAuthAttempt = user.valueOf("@password").equals(mPassword);
 
-            Log.d("MileageApp.auth", String.format("Login attempt %s", validAuthAttempt ? "successful" : "failed"));
+            Log.d("ExpensesApp.auth", String.format("Login attempt %s", validAuthAttempt ? "successful" : "failed"));
 
             return validAuthAttempt;
           }

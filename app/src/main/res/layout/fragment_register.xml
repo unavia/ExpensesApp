@@ -16,7 +16,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="32dp"
         style="@style/max_width_account_pages"
-        tools:context="ca.kendallroth.mileageapp.fragments.RegisterFragment">
+        tools:context="ca.kendallroth.expensesapp.fragments.RegisterFragment">
 
         <!-- Name input -->
         <android.support.design.widget.TextInputLayout

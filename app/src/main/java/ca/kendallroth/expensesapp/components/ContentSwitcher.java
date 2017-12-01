@@ -1,4 +1,4 @@
-  package ca.kendallroth.mileageapp.components;
+  package ca.kendallroth.expensesapp.components;
 
   import android.content.Context;
   import android.support.design.widget.TabLayout;
@@ -6,11 +6,10 @@
   import android.support.v4.view.ViewPager;
   import android.support.v4.view.ViewPager.OnPageChangeListener;
   import android.util.AttributeSet;
-  import android.util.Log;
   import android.view.LayoutInflater;
   import android.widget.LinearLayout;
 
-  import ca.kendallroth.mileageapp.R;
+  import ca.kendallroth.expensesapp.R;
 
   /**
    * Tabbed Fragment layout with swipe functionality
