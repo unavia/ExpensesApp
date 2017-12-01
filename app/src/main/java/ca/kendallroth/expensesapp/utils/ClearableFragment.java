@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.utils;
+package ca.kendallroth.expensesapp.utils;
 
 /**
  * Interface to add a method for clearing input

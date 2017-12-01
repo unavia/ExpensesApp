@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp;
+package ca.kendallroth.expensesapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ca.kendallroth.mileageapp", appContext.getPackageName());
+        assertEquals("ca.kendallroth.expensesapp", appContext.getPackageName());
     }
 }

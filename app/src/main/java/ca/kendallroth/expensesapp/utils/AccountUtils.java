@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.utils;
+package ca.kendallroth.expensesapp.utils;
 
 /**
  * Utility functions for Login and Create Account workflows

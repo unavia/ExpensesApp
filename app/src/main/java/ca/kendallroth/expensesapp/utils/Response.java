@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.utils;
+package ca.kendallroth.expensesapp.utils;
 
 /**
  * Utility class to indicate the response of an action

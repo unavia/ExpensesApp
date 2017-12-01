@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="ca.kendallroth.mileageapp">
+          package="ca.kendallroth.expensesapp">
 
     <application
-        android:name=".MileageApp"
+        android:name="ca.kendallroth.expensesapp.ExpensesApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,22 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="ca.kendallroth.expensesapp.activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.AuthActivity">
+        <activity android:name="ca.kendallroth.expensesapp.activities.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RequestPasswordResetActivity">
+        <activity android:name="ca.kendallroth.expensesapp.activities.RequestPasswordResetActivity">
         </activity>
-        <activity android:name=".activities.ResetPasswordActivity">
+        <activity android:name="ca.kendallroth.expensesapp.activities.ResetPasswordActivity">
         </activity>
-        <activity android:name=".activities.SettingsActivity">
+        <activity android:name="ca.kendallroth.expensesapp.activities.SettingsActivity">
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp;
+package ca.kendallroth.expensesapp;
 
 import org.junit.Test;
 

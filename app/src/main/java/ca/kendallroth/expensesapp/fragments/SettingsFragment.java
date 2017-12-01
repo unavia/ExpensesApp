@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.fragments;
+package ca.kendallroth.expensesapp.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.utils.AuthUtils;
-import ca.kendallroth.mileageapp.utils.Response;
-import ca.kendallroth.mileageapp.utils.StatusCode;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.utils.AuthUtils;
+import ca.kendallroth.expensesapp.utils.Response;
+import ca.kendallroth.expensesapp.utils.StatusCode;
 
 /**
  * Fragment to allow users to view and change global settings

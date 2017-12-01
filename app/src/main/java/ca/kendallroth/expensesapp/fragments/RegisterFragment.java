@@ -1,4 +1,4 @@
-package ca.kendallroth.mileageapp.fragments;
+package ca.kendallroth.expensesapp.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,19 +16,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.Node;
-
-import java.util.List;
-
-import ca.kendallroth.mileageapp.R;
-import ca.kendallroth.mileageapp.utils.AccountUtils;
-import ca.kendallroth.mileageapp.utils.AuthUtils;
-import ca.kendallroth.mileageapp.utils.ClearableFragment;
-import ca.kendallroth.mileageapp.utils.Response;
-import ca.kendallroth.mileageapp.utils.StatusCode;
-import ca.kendallroth.mileageapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.AuthUtils;
+import ca.kendallroth.expensesapp.utils.ClearableFragment;
+import ca.kendallroth.expensesapp.utils.Response;
+import ca.kendallroth.expensesapp.utils.StatusCode;
 
 /**
  * Fragment for enabling a user to register for the app
