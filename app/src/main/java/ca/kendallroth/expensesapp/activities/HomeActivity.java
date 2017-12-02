@@ -11,12 +11,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.persistence.AppDatabase;
+import ca.kendallroth.expensesapp.persistence.User;
 
 /**
  * Main activity after authentication has occurred (automatic or Login activity)
  */
 public class HomeActivity extends AppCompatActivity {
+
+  private AppDatabase database;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -88,5 +94,12 @@ public class HomeActivity extends AppCompatActivity {
   public void onBackPressed() {
     // Move the app to the Android background rather than allowing the user to return to "Login" activity
     moveTaskToBack(true);
+  }
+
+  @Override
+  public void onDestroy() {
+    AppDatabase.destroyInstance();
+
+    super.onDestroy();
   }
 }

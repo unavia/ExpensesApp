@@ -9,7 +9,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import java.util.Date;
+
 import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.persistence.AppDatabase;
+import ca.kendallroth.expensesapp.persistence.User;
 import ca.kendallroth.expensesapp.utils.AuthUtils;
 import ca.kendallroth.expensesapp.utils.Response;
 import ca.kendallroth.expensesapp.utils.StatusCode;
@@ -116,8 +120,17 @@ public class SettingsFragment extends PreferenceFragment {
    * Handler for the Clear Database confirmation dialog confirm action
    */
   public void onClearDatabaseConfirm() {
-    // Clear the authentication database
-    Response clearDatabaseResponse = AuthUtils.resetAuthFile();
+    Response clearDatabaseResponse = new Response(StatusCode.FAILURE, "Error clearing the database");
+
+    // Clean up the database
+    AppDatabase mDatabase = AppDatabase.getDatabase(getActivity().getApplicationContext());
+    int countUsersDeleted = mDatabase.userDao().removeAllUsers();
+    AppDatabase.destroyInstance();
+
+    if (countUsersDeleted > 0) {
+      // Clean up the authentication file
+      clearDatabaseResponse = AuthUtils.resetAuthFile();
+    }
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)
     View snackbarRoot = getActivity().findViewById(android.R.id.content);
@@ -144,7 +157,7 @@ public class SettingsFragment extends PreferenceFragment {
    * Handler for the Delete Account confirmation dialog confirm action
    */
   public void onDeleteAccountConfirm() {
-    // TODO: Delete the user's account
+    // TODO: Delete the user's account from authentication file and DB
     Response accountDeleteResponse = AuthUtils.removeAuthUser("", "");
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)

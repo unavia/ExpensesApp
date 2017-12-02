@@ -222,7 +222,7 @@ public abstract class AuthUtils {
    * @param newPassword User's new password
    * @return Operation response with status and message
    */
-  public static Response UpdateAuthUserPassword(String email, String newPassword) {
+  public static Response updateAuthUserPassword(String email, String newPassword) {
     if (fileContext == null) return invalidFileContext;
 
     Document document;

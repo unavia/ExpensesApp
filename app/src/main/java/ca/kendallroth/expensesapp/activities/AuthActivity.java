@@ -15,6 +15,7 @@ import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListe
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.components.ContentSwitcher;
 import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
+import ca.kendallroth.expensesapp.persistence.AppDatabase;
 
 /**
  * Authorization activity that displays Login and Register workflows in a ViewPager
