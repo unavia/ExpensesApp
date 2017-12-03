@@ -192,6 +192,17 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
         attemptLogin();
       }
     });
+    mLoginButton.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        // Show a progress spinner, and kick off a background task to perform the sample user login attempt.
+        mProgressDialog.show();
+        mAuthTask = new LoginTask("kendall@example.com", "hello");
+        mAuthTask.execute((Void) null);
+
+        return true;
+      }
+    });
 
     // Forgot password button
     mForgotPasswordButton = (Button) loginView.findViewById(R.id.forgot_password_button);
