@@ -29,6 +29,23 @@ public abstract class AuthUtils {
 
 
   /**
+   * Determine whether the authentication file already exists
+   * @return Whether the authentication file already exists
+   */
+  public static boolean findAuthFile() {
+    // Find the authentication file in internal storage
+    boolean authFileExists = fileContext.getFileStreamPath(XMLFileUtils.USERS_FILE_NAME).exists();
+
+    String authFileStatus = authFileExists
+        ? "Authentication file already exists"
+        : "Authentication file doesn't exist";
+    Log.d("MileageApp", authFileStatus);
+
+    return authFileExists;
+  }
+
+
+  /**
    * Create the temporary authentication file
    * @return Operation response with status and message
    */
@@ -59,6 +76,34 @@ public abstract class AuthUtils {
     }
 
     return new Response(responseStatus, responseString);
+  }
+
+
+  /**
+   * Count the number of users in the authentication file
+   * @return Number of registered users
+   */
+  public static int getAuthUserCount() {
+    if (fileContext == null) return -1;
+
+    int userCount = 0;
+
+    Document document;
+
+    try {
+      // Read XML file with user information
+      document = XMLFileUtils.getFile(fileContext, XMLFileUtils.USERS_FILE_NAME);
+
+      // Select all the "user" nodes in the document
+      Element usersNode = (Element) document.selectSingleNode("/users");
+      List<Node> users = document.selectNodes("/users/user");
+
+      userCount = users.size();
+    } catch (Exception e) {
+      userCount = -1;
+    }
+
+    return userCount;
   }
 
 
@@ -308,6 +353,36 @@ public abstract class AuthUtils {
       responseString = "code_failure_auth_file_reset_file_parse";
 
       Log.d("ExpensesApp.auth", "Authentication file reset failed with a file parsing error");
+    }
+
+    return new Response(responseStatus, responseString);
+  }
+
+
+  /**
+   * Remove the authentication file
+   * @return Operation response with status and message
+   */
+  public static Response removeAuthFile() {
+    if (fileContext == null) return invalidFileContext;
+
+    StatusCode responseStatus = null;
+    String responseString = "";
+
+    try {
+      // Delete the authentication file
+      XMLFileUtils.deleteFile(fileContext, XMLFileUtils.USERS_FILE_NAME);
+
+      responseStatus = StatusCode.SUCCESS;
+      responseString = "code_success_auth_file_deleted";
+
+      Log.d("ExpensesApp.auth", "Authentication file deleted");
+    } catch (Exception e) {
+      // Return a failure status (no match) if the file parsing fails or throws an exception
+      responseStatus = StatusCode.FAILURE;
+      responseString = "code_failure_auth_file_delete_file_parse";
+
+      Log.d("ExpensesApp.auth", "Authentication file delete failed with a file parsing error");
     }
 
     return new Response(responseStatus, responseString);

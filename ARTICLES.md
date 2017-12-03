@@ -38,7 +38,7 @@ The Soft Keyboard can be hidden by first checking for the currently focused view
 - Taken from [Stack Overflow - Close/Hide the Android soft keyboard](https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard)
 
 ### Access the Android shell
-Viewing the app's private files is possible through the use of the Android shell (ADB). Navigate to the project directory and run `adb shell` in a terminal. Inside the shell, type `run-as expensesapp` to set the shell permission, the list the directory files (`ls files/`).
+Viewing the app's private files is possible through the use of the Android shell (ADB). Navigate to the project directory and run `adb shell` in a terminal. Inside the shell, type `run-as ca.kendallroth.expensesapp` to set the shell permission, the list the directory files (`ls files/`).
 
 ### Pass data between Activities
 Passing data to a new Activity is as simple as properly using `intent.putExtras()` when creating the Intent - passing data back from the same Activity is also quite simple. Rather than call `startActivity` we call `startActivityForResult()` which will call the class's overriden `onActivityResult()` method when the Activity returns.

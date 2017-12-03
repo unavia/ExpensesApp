@@ -122,14 +122,14 @@ public class SettingsFragment extends PreferenceFragment {
   public void onClearDatabaseConfirm() {
     Response clearDatabaseResponse = new Response(StatusCode.FAILURE, "Error clearing the database");
 
-    // Clean up the database
-    AppDatabase mDatabase = AppDatabase.getDatabase(getActivity().getApplicationContext());
-    int countUsersDeleted = mDatabase.userDao().removeAllUsers();
-    AppDatabase.destroyInstance();
+    // Clean up the authentication file
+    clearDatabaseResponse = AuthUtils.resetAuthFile();
 
-    if (countUsersDeleted > 0) {
-      // Clean up the authentication file
-      clearDatabaseResponse = AuthUtils.resetAuthFile();
+    // Clean up the database if the authentication file operation succeeds
+    if (clearDatabaseResponse.getStatusCode().equals(StatusCode.SUCCESS)) {
+      AppDatabase mDatabase = AppDatabase.getDatabase(getActivity().getApplicationContext());
+      mDatabase.userDao().removeAllUsers();
+      AppDatabase.destroyInstance();
     }
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)

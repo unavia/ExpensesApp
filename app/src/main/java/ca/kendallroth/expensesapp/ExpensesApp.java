@@ -54,49 +54,47 @@ public class ExpensesApp extends Application {
    * Create the authentication file with initial values
    */
   private void checkAuthenticationFile() {
-    // Skip this step if the authentication file already exists
-    if(findAuthFile()) {
+    // Skip this step if the authentication file already exists and is not empty
+    if(AuthUtils.findAuthFile() && AuthUtils.getAuthUserCount() > 0) {
       return;
     }
 
-    // Create the authentication file
-    Response createAuthFileResponse = AuthUtils.createAuthFile();
-    boolean createAuthFileSuccess = createAuthFileResponse.getStatusCode() == StatusCode.SUCCESS;
+    boolean createAuthFileSuccess = false;
+
+    // Create the authentication file only if necessary (normally will be empty after a reset)
+    if (!AuthUtils.findAuthFile()) {
+      Response createAuthFileResponse = AuthUtils.createAuthFile();
+      createAuthFileSuccess = createAuthFileResponse.getStatusCode() == StatusCode.SUCCESS;
+    }
+
+    String sampleUserEmail = "kendall@example.com";
+    String sampleUserPassword ="hello";
+
+    // DEBUG: This is only for debugging purposes
 
     // Add the sample user to the database and authentication file
     if (!createAuthFileSuccess) {
-      Response createAccountResponse = AuthUtils.addAuthUser("kendall@example.com", "Kendall Roth", "password");
+      Response createAccountResponse = AuthUtils.addAuthUser(sampleUserEmail, "Kendall Roth", sampleUserPassword);
 
       // Only add to database if authentication file insert succeeded
       if (createAccountResponse.getStatusCode().equals(StatusCode.SUCCESS)) {
         mDatabase = AppDatabase.getDatabase(getApplicationContext());
 
         Date currentDate = new Date();
-        User newUser = new User(0, "kendall@example.com", null, "Kendall Roth", true, currentDate, currentDate, null, false);
+        User newUser = new User(0, sampleUserEmail, null, "Kendall Roth", true, currentDate, currentDate, null, false);
         long newRowId = mDatabase.userDao().addUser(newUser);
 
-        // TODO: Handle database failures
+        // Handle database insert failures
+        if (newRowId <= 0) {
+          AuthUtils.removeAuthUser(sampleUserEmail, sampleUserPassword);
+        }
+
+        Log.d("MileageApp", "Database test account creation failed. All changes rolled back.");
 
         AppDatabase.destroyInstance();
       }
     }
 
     // TODO: Do something with response
-  }
-
-  /**
-   * Determine whether the authentication file already exists
-   * @return Whether the authentication file already exists
-   */
-  private boolean findAuthFile() {
-    // Find the authentication file in internal storage
-    boolean authFileExists = getBaseContext().getFileStreamPath(XMLFileUtils.USERS_FILE_NAME).exists();
-
-    String authFileStatus = authFileExists
-        ? "Authentication file already exists"
-        : "Authentication file doesn't exist";
-    Log.d("MileageApp", authFileStatus);
-
-    return authFileExists;
   }
 }

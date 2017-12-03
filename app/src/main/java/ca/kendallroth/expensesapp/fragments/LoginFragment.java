@@ -222,6 +222,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
 
   /**
    * Start the Reset Password activity
+   * @param accountEmail Seed email for Reset Password activity
    */
   private void startResetPasswordActivity(String accountEmail) {
     // Start the Reset Password activity and set the result/callback code
