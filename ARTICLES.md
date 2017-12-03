@@ -44,3 +44,7 @@ Viewing the app's private files is possible through the use of the Android shell
 Passing data to a new Activity is as simple as properly using `intent.putExtras()` when creating the Intent - passing data back from the same Activity is also quite simple. Rather than call `startActivity` we call `startActivityForResult()` which will call the class's overriden `onActivityResult()` method when the Activity returns.
 
 - Taken from : [Stack Overflow - How to pass data from 2nd activity to 1st activity when pressed back android](https://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android)
+
+### Navigation Drawer
+
+- Taken from [Android Sliding Menu using Navigation Drawer](https://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/)

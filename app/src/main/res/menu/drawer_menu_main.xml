@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Main activity drawer menu -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <!-- Main menu items -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_drawer_dashboard"
+            android:title="@string/title_activity_dashboard"/>
+        <item
+            android:id="@+id/nav_transactions"
+            android:icon="@drawable/ic_drawer_cart"
+            android:title="@string/title_activity_transactions"/>
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/ic_drawer_label"
+            android:title="@string/title_activity_categories"/>
+    </group>
+
+    <!-- Other items -->
+    <item android:title="@string/drawer_other_group">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_drawer_about"
+                android:title="@string/title_activity_about"/>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_drawer_settings"
+                android:title="@string/title_activity_settings"/>
+        </menu>
+    </item>
+
+</menu>

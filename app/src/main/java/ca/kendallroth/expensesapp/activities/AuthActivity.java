@@ -15,7 +15,6 @@ import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListe
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.components.ContentSwitcher;
 import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
-import ca.kendallroth.expensesapp.persistence.AppDatabase;
 
 /**
  * Authorization activity that displays Login and Register workflows in a ViewPager
@@ -57,10 +56,10 @@ public class AuthActivity extends AppCompatActivity implements IAccountCreateLis
       return;
     }
 
-    // Set navigation history (home) and start the Home activity
-    Intent homeActivityIntent = new Intent(this, HomeActivity.class);
-    homeActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-    startActivity(homeActivityIntent);
+    // Set navigation history (main) and start the Main activity
+    Intent mainActivityIntent = new Intent(this, MainActivity.class);
+    mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+    startActivity(mainActivityIntent);
     finish();
   }
 
