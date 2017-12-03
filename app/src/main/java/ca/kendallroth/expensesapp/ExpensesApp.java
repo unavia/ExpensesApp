@@ -73,7 +73,7 @@ public class ExpensesApp extends Application {
     // DEBUG: This is only for debugging purposes
 
     // Add the sample user to the database and authentication file
-    if (!createAuthFileSuccess) {
+    if (createAuthFileSuccess) {
       Response createAccountResponse = AuthUtils.addAuthUser(sampleUserEmail, "Kendall Roth", sampleUserPassword);
 
       // Only add to database if authentication file insert succeeded
