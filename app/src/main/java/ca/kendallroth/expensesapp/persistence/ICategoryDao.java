@@ -21,5 +21,8 @@ public interface ICategoryDao {
   int updateCategory(Category category);
 
   @Query("DELETE FROM category WHERE id = :id")
-  int delete(long id);
+  int deleteCategory(long id);
+
+  @Query("DELETE FROM user")
+  int clear();
 }

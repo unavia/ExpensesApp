@@ -11,13 +11,24 @@ import ca.kendallroth.expensesapp.utils.response.IntResponse;
 import ca.kendallroth.expensesapp.utils.response.Response;
 import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
+/**
+ * User authorization implementation and interface with the database
+ *
+ * Contains many utility methods for interacting and managing user and authentication information.
+ */
 public abstract class Authorization {
 
+  /**
+   * Determine whether a user's credentials are valid authenticated combination
+   * @param email    Account email address
+   * @param password Account password
+   * @return Whether user is authenticated
+   */
   public static BooleanResponse authenticateUser(String email, String password) {
     AppDatabase database = AppDatabase.getDatabase();
     User requestedUser = null;
 
-    // Find the requested user
+    // Find the requested user in order to compare the passwords
     try {
       requestedUser = database.userDao().getUser(email);
 
@@ -37,6 +48,8 @@ public abstract class Authorization {
 
       return new BooleanResponse(StatusCode.ERROR, "authenticate_user_not_found", false);
     }
+
+    // TODO: Hash password before comparison
 
     // Verify that the requested password matches the user's password
     boolean isAuthenticated = requestedUser.password.equals(password);
@@ -59,6 +72,10 @@ public abstract class Authorization {
   }
 
 
+  /**
+   * Get a count of the number of registered users
+   * @return Number of registered users
+   */
   public static IntResponse countAllUsers() {
     AppDatabase database = AppDatabase.getDatabase();
     int userCount = 0;
@@ -83,6 +100,11 @@ public abstract class Authorization {
   }
 
 
+  /**
+   * Determine whether a user's account is active
+   * @param email Account email address
+   * @return Whether account is active
+   */
   public static BooleanResponse checkUserActive(String email) {
     AppDatabase database = AppDatabase.getDatabase();
     User requestedUser = null;
@@ -107,7 +129,7 @@ public abstract class Authorization {
       return new BooleanResponse(StatusCode.ERROR, "check_user_active_not_found", false);
     }
 
-    // Verify that the requested password matches the user's password
+    // Determine if user account is active
     boolean isActivated = requestedUser.active;
 
     String debugMessage;
@@ -128,6 +150,11 @@ public abstract class Authorization {
   }
 
 
+  /**
+   * Determine whether a user account exists for an email address
+   * @param email Account email address
+   * @return Whether account exists for email address
+   */
   public static BooleanResponse checkUserExists(String email) {
     AppDatabase database = AppDatabase.getDatabase();
     User user = null;
@@ -166,6 +193,13 @@ public abstract class Authorization {
   }
 
 
+  /**
+   * Create a new user account and authentication information
+   * @param name     User's first and last names
+   * @param email    Account email address
+   * @param password Account password
+   * @return
+   */
   public static Response createUser(String name, String email, String password){
     AppDatabase database = AppDatabase.getDatabase();
     long newRowId = 0;
@@ -184,6 +218,8 @@ public abstract class Authorization {
     try {
       Date currentDate = new Date();
       User newUser = new User(0, email, password, name, true, currentDate, currentDate, null, false);
+
+      // TODO: Hash password before adding
 
       newRowId = database.userDao().addUser(newUser);
 
@@ -218,6 +254,11 @@ public abstract class Authorization {
   }
 
 
+  /**
+   * Mark an account as deleted
+   * @param email Deleted account email
+   * @return Whether account deletion succeeded
+   */
   public static Response removeUser(String email) {
     AppDatabase database = AppDatabase.getDatabase();
     int rowsDeleted = 0;
@@ -234,7 +275,7 @@ public abstract class Authorization {
 
     // Remove the user account
     try {
-      rowsDeleted = database.userDao().removeUser(email);
+      rowsDeleted = database.userDao().deleteUser(email);
 
       AppDatabase.destroyInstance();
     } catch(Exception e) {
@@ -267,55 +308,12 @@ public abstract class Authorization {
   }
 
 
-  public static Response removeAllUsers() {
-    AppDatabase database = AppDatabase.getDatabase();
-    int rowsDeleted = 0;
-
-    // Only delete all users if any exist
-    IntResponse userCount = countAllUsers();
-
-    if (userCount.getResult() <= 0) {
-      Log.d("ExpensesApp.auth", "No users were found for deletion");
-
-      return new Response(StatusCode.WARNING, "remove_all_users_found_none");
-    }
-
-    // Remove all user accounts
-    try {
-      rowsDeleted = database.userDao().removeAllUsers();
-
-      AppDatabase.destroyInstance();
-    } catch(Exception e) {
-      AppDatabase.destroyInstance();
-
-      Log.e("ExpensesApp.auth", "Error removing all accounts");
-
-      return new Response(StatusCode.FAILURE, "remove_all_users_failed");
-    }
-
-    StatusCode resultCode;
-    String debugMessage;
-    String resultMessage;
-
-    // Indicate if the all users were removed
-    if (rowsDeleted > 0) {
-      resultCode = StatusCode.SUCCESS;
-      debugMessage = "Deleting all users succeeded";
-      resultMessage = "remove_all_users_succeeded";
-    } else {
-      resultCode = StatusCode.ERROR;
-      debugMessage = "Deleting all users failed";
-      resultMessage = "remove_all_users_failed";
-    }
-
-    // TODO: Add audit logging
-    Log.d("ExpensesApp.auth", debugMessage);
-
-
-    return new Response(resultCode, resultMessage);
-  }
-
-
+  /**
+   * Reset a user's password after they have requested a reset
+   * @param email       Account email address
+   * @param newPassword New user password
+   * @return Whether password reset succeeded
+   */
   public static BooleanResponse resetUserPassword(String email, String newPassword){
     AppDatabase database = AppDatabase.getDatabase();
     User requestedUser = null;
@@ -338,50 +336,6 @@ public abstract class Authorization {
       Log.d("ExpensesApp.auth", String.format("No user with email '%s' was found to reset password", email));
 
       return new BooleanResponse(StatusCode.ERROR, "reset_password_user_not_found", false);
-    }
-
-    // Update the user's password
-    requestedUser.password = newPassword;
-
-    database.userDao().updateUser(requestedUser);
-
-    Log.d("ExpensesApp.auth", String.format("Password updated to '%s' for user with email '%s'", newPassword, email));
-
-    return new BooleanResponse(StatusCode.ERROR, "update_password_successful", true);
-  }
-
-
-  public static BooleanResponse updateUserPassword(String email, String oldPassword, String newPassword){
-    AppDatabase database = AppDatabase.getDatabase();
-    User requestedUser = null;
-
-    // Find the requested user
-    try {
-      requestedUser = database.userDao().getUser(email);
-
-      AppDatabase.destroyInstance();
-    } catch (Exception e) {
-      AppDatabase.destroyInstance();
-
-      Log.e("ExpensesApp.auth", String.format("Error finding user with email '%s' to update password", email));
-
-      return new BooleanResponse(StatusCode.FAILURE, "update_password_failure", false);
-    }
-
-    // Only update the password if the user exists
-    if (requestedUser == null) {
-      Log.d("ExpensesApp.auth", String.format("No user with email '%s' was found to update password", email));
-
-      return new BooleanResponse(StatusCode.ERROR, "update_password_user_not_found", false);
-    }
-
-    // Verify that the old password matches the user's current password
-    boolean isValidOldPassword = requestedUser.password.equals(oldPassword);
-
-    if (!isValidOldPassword) {
-      Log.d("ExpensesApp.auth", String.format("Password '%s' does not match the current password for user with email '%s'", oldPassword, email));
-
-      return new BooleanResponse(StatusCode.ERROR, "update_password_incorrect_old_password", false);
     }
 
     // Update the user's password

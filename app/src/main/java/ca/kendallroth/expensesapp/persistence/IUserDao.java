@@ -29,8 +29,11 @@ public interface IUserDao {
   int updateUser(User user);
 
   @Query("DELETE FROM user WHERE email = :email")
-  int removeUser(String email);
+  int hardDeleteUser(String email);
+
+  @Query("UPDATE user SET deleted=true WHERE email = :email")
+  int deleteUser(String email);
 
   @Query("DELETE FROM user")
-  int removeAllUsers();
+  int clear();
 }

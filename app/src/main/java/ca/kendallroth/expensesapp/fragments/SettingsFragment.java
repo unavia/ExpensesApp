@@ -7,6 +7,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 
 import ca.kendallroth.expensesapp.R;
@@ -114,25 +115,39 @@ public class SettingsFragment extends PreferenceFragment {
   }
 
   /**
-   * Handler for the Clear Database confirmation dialog confirm action
+   * Handler for the Clear Database confirmation dialog confirm action.
+   *
+   * Completely cleans the database and then refills with initial data
    */
   public void onClearDatabaseConfirm() {
-    Response clearDatabaseResponse = new Response(StatusCode.FAILURE, "Error clearing the database");
+    AppDatabase mDatabase = AppDatabase.getDatabase();
 
-    // Clean up the authentication file
-    clearDatabaseResponse = AuthUtils_DEPRECATED.resetAuthFile();
+    boolean didCleanupSucceed = false;
 
-    // Clean up the database if the authentication file operation succeeds
-    if (clearDatabaseResponse.getStatusCode().equals(StatusCode.SUCCESS)) {
-      AppDatabase mDatabase = AppDatabase.getDatabase();
-      mDatabase.userDao().removeAllUsers();
-      AppDatabase.destroyInstance();
+    try {
+      mDatabase.beginTransaction();
+
+      // Clean up the database tables
+      mDatabase.categoryDao().clear();
+      mDatabase.userDao().clear();
+
+      // TODO: Re-add database seed data
+
+      mDatabase.setTransactionSuccessful();
+      mDatabase.endTransaction();
+
+      didCleanupSucceed = true;
+    } catch (Exception e) {
+      mDatabase.endTransaction();
+
+      Log.e("ExpensesApp.db", "Clearing the database caused an error");
     }
+    AppDatabase.destroyInstance();
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)
     View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
-    CharSequence snackbarResource = clearDatabaseResponse.getStatusCode() == StatusCode.SUCCESS
+    CharSequence snackbarResource = didCleanupSucceed
         ? getString(R.string.success_clear_database)
         : getString(R.string.failure_clear_database);
     Snackbar resultSnackbar = Snackbar.make(snackbarRoot, snackbarResource, Snackbar.LENGTH_SHORT);
@@ -155,12 +170,13 @@ public class SettingsFragment extends PreferenceFragment {
    */
   public void onDeleteAccountConfirm() {
     // TODO: Delete the user's account from authentication file and DB
-    Response accountDeleteResponse = AuthUtils_DEPRECATED.removeAuthUser("", "");
+
+    boolean didDeleteSucceed = false;
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)
     View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
-    CharSequence snackbarResource = accountDeleteResponse.getStatusCode() == StatusCode.SUCCESS
+    CharSequence snackbarResource = didDeleteSucceed
         ? getString(R.string.success_delete_account)
         : getString(R.string.failure_delete_account);
 
