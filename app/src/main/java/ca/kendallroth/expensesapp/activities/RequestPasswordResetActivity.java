@@ -23,7 +23,9 @@ import java.util.List;
 
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
 
 /**
  * Request password reset activity that enables a user to request a password reset
@@ -209,38 +211,15 @@ public class RequestPasswordResetActivity extends AppCompatActivity {
         return false;
       }
 
-      Document document;
+      // TODO: Enable the user to reset their password
 
-      try {
-        // Read XML file with user information
-        document = XMLFileUtils.getFile(getBaseContext(), XMLFileUtils.USERS_FILE_NAME);
+      // NOTE: Temporarily use whether a valid account was requested to route to activity
+      BooleanResponse requestPasswordResetResponse = Authorization.checkUserExists(mEmail);
 
-        // Select all the "user" nodes in the document
-        List<Node> users = document.selectNodes("/users/user");
+      // Invalid email requests should appear to behave the same as valid email requests,
+      // so as to not alert an unauthenticated/invalid user that an email doesn't exist (security).
 
-        boolean validResetRequestEmail = false;
-
-        // Verify that the requested user email exists (but don't alert if not)
-        for (Node user : users) {
-          if (user.valueOf("@email").equals(mEmail)) {
-            validResetRequestEmail = true;
-            break;
-          }
-        }
-
-        Log.d("ExpensesApp.auth", String.format("Password reset request email %s", validResetRequestEmail ? "found" : "not found"));
-
-        // TODO: Enable the user to reset their password
-
-        // Invalid email requests should appear to behave the same as valid email requests,
-        // so as to not alert an unauthenticated/invalid user that an email doesn't exist (security).
-
-        // NOTE: Temporarily use whether a valid account was requested to route to activity
-        return validResetRequestEmail;
-      } catch (Exception e) {
-        // Return false (no match) if the file parsing fails or throws an exception
-        return false;
-      }
+      return requestPasswordResetResponse.getResult();
     }
 
     @Override

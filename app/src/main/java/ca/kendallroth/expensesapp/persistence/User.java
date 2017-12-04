@@ -2,13 +2,15 @@ package ca.kendallroth.expensesapp.persistence;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
 @Entity(
-    tableName = "user"
+    tableName = "user",
+    indices = {@Index(value = "email", unique = true)}
 )
 public class User extends BaseModel {
 
@@ -19,8 +21,8 @@ public class User extends BaseModel {
   @ColumnInfo(name = "email")
   public String email;
 
-  @ColumnInfo(name = "username")
-  public String username;
+  @ColumnInfo(name = "password")
+  public String password;
 
   @ColumnInfo(name = "name")
   public String name;
@@ -33,14 +35,14 @@ public class User extends BaseModel {
   public Date dateActivated;
 
   public User(
-      int id, String email, String username, String name, boolean active, Date dateActivated,
+      int id, String email, String password, String name, boolean active, Date dateActivated,
       Date dateCreated, Date dateModified, boolean deleted
   ) {
     super(dateCreated, dateModified, deleted);
 
     this.id = id;
     this.email = email;
-    this.username = username;
+    this.password = password;
     this.name = name;
     this.active = active;
     this.dateActivated = dateActivated;

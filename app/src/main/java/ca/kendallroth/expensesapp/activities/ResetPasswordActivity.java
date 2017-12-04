@@ -26,7 +26,9 @@ import java.util.List;
 
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
 
 /**
  * Reset password activity that enables a user to reset their password
@@ -248,39 +250,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         return false;
       }
 
-      Document document;
+      // Reset the user's password
+      BooleanResponse resetPasswordResult = Authorization.resetUserPassword(mEmail, mPassword);
 
-      try {
-        // Read XML file with user information
-        document = XMLFileUtils.getFile(getBaseContext(), XMLFileUtils.USERS_FILE_NAME);
-
-        // Select all the "user" nodes in the document
-        List<Node> users = document.selectNodes("/users/user");
-
-        boolean passwordResetSuccessful = false;
-
-        // Verify that the requested user email exists (but don't alert if not)
-        for (Node user : users) {
-          if (user.valueOf("@email").equals(mEmail)) {
-            // Update the password
-            Element userElement = (Element) user;
-            userElement.addAttribute("password", mPassword);
-
-            // Write the updated file
-            XMLFileUtils.createFile(getBaseContext(), XMLFileUtils.USERS_FILE_NAME, document);
-
-            passwordResetSuccessful = true;
-            break;
-          }
-        }
-
-        Log.d("ExpensesApp.auth", String.format("Password reset for email %s", passwordResetSuccessful ? "successful" : "failed"));
-
-        return passwordResetSuccessful;
-      } catch (Exception e) {
-        // Return false (no match) if the file parsing fails or throws an exception
-        return false;
-      }
+      return resetPasswordResult.getResult();
     }
 
     @Override

@@ -46,5 +46,11 @@ Passing data to a new Activity is as simple as properly using `intent.putExtras(
 - Taken from : [Stack Overflow - How to pass data from 2nd activity to 1st activity when pressed back android](https://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android)
 
 ### Navigation Drawer
+A Navigation Drawer typically uses a main content view with several fragments that are displayed based on the selected menu options.
 
 - Taken from [Android Sliding Menu using Navigation Drawer](https://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/)
+
+### Room DB Callbacks
+Room exposes two callback methods that can be used to populate or respond to database operations, `onCreate` and `onOpen`. These methods can be used to populate with initial seed data or respond each time the database is opened.
+
+- Taken from [Room DB Callbacks](https://medium.com/@srinuraop/database-create-and-open-callbacks-in-room-7ca98c3286ab)

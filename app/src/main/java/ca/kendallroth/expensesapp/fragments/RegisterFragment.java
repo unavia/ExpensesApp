@@ -16,16 +16,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Date;
-
 import ca.kendallroth.expensesapp.R;
-import ca.kendallroth.expensesapp.persistence.AppDatabase;
-import ca.kendallroth.expensesapp.persistence.User;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
-import ca.kendallroth.expensesapp.utils.AuthUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.ClearableFragment;
-import ca.kendallroth.expensesapp.utils.Response;
-import ca.kendallroth.expensesapp.utils.StatusCode;
+import ca.kendallroth.expensesapp.utils.response.Response;
+import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 /**
  * Fragment for enabling a user to register for the app
@@ -117,8 +113,6 @@ public class RegisterFragment extends Fragment implements ClearableFragment {
 
   @Override
   public void onDetach() {
-    AppDatabase.destroyInstance();
-
     super.onDetach();
 
     mIAccountCreateListener = null;
@@ -293,27 +287,10 @@ public class RegisterFragment extends Fragment implements ClearableFragment {
         return false;
       }
 
-      // Add new account to authentication file
-      Response createAccountResponse = AuthUtils.addAuthUser(mEmail, mName, mPassword);
+      // Create the user account
+      Response createUserResponse = Authorization.createUser(mName, mEmail, mPassword);
 
-      // Only add database record if authentication file insert succeeded
-      if (createAccountResponse.getStatusCode().equals(StatusCode.SUCCESS)) {
-        AppDatabase mDatabase = AppDatabase.getDatabase(getActivity().getApplicationContext());
-
-        // Create a new user and add to database
-        Date currentDate = new Date();
-        User newUser = new User(0, mEmail, null, mName, true, currentDate, currentDate, null, false);
-        long newRowId = mDatabase.userDao().addUser(newUser);
-
-        AppDatabase.destroyInstance();
-
-        if (newRowId <= 0) {
-          createAccountResponse = new Response(StatusCode.FAILURE, "Failed to create account in DB");
-        }
-      }
-
-      // TODO: Do something with the response
-      return createAccountResponse.getStatusCode() == StatusCode.SUCCESS;
+      return createUserResponse.getStatusCode() == StatusCode.SUCCESS;
     }
 
     @Override

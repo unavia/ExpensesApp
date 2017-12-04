@@ -12,11 +12,13 @@ import java.util.List;
 
 import ca.kendallroth.expensesapp.ExpensesApp;
 import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.utils.response.Response;
+import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 /**
  * Utility functions for authorization workflows
  */
-public abstract class AuthUtils {
+public abstract class AuthUtils_DEPRECATED {
 
   // Associate file context when app starts
   public static Context fileContext = null;

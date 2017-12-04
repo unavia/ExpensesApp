@@ -13,15 +13,24 @@ public interface IUserDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   long addUser(User user);
 
-  @Query("select * from user")
-  public List<User> getAllUser();
+  @Query("SELECT * FROM user")
+  public List<User> getAllUsers();
 
-  @Query("select * from user where id = :user_id")
-  public List<User> getUser(long user_id);
+  @Query("SELECT COUNT(*) FROM user")
+  public int countUsers();
+
+  @Query("SELECT * FROM user WHERE id = :user_id LIMIT 1")
+  public User getUser(long user_id);
+
+  @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
+  public User getUser(String email);
 
   @Update(onConflict = OnConflictStrategy.REPLACE)
   int updateUser(User user);
 
-  @Query("delete from user")
+  @Query("DELETE FROM user WHERE email = :email")
+  int removeUser(String email);
+
+  @Query("DELETE FROM user")
   int removeAllUsers();
 }

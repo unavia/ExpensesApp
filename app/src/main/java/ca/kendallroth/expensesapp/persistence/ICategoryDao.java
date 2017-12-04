@@ -20,6 +20,6 @@ public interface ICategoryDao {
   @Update(onConflict = OnConflictStrategy.REPLACE)
   int updateCategory(Category category);
 
-  @Query("delete from category where id = :id")
+  @Query("DELETE FROM category WHERE id = :id")
   int delete(long id);
 }

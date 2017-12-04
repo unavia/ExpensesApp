@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.BoringLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,9 +33,11 @@ import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.activities.RequestPasswordResetActivity;
 import ca.kendallroth.expensesapp.activities.ResetPasswordActivity;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.ClearableFragment;
 import ca.kendallroth.expensesapp.utils.ScrollableFragment;
 import ca.kendallroth.expensesapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -419,33 +422,10 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
         return false;
       }
 
-      Document document;
+      // Authenticate the user with the provided information
+      BooleanResponse authenticateUserResponse = Authorization.authenticateUser(mEmail, mPassword);
 
-      try {
-        // Read XML file with user information
-        document = XMLFileUtils.getFile(getActivity().getBaseContext(), XMLFileUtils.USERS_FILE_NAME);
-
-        // Select all the "user" nodes in the document
-        List<Node> users = document.selectNodes("/users/user");
-
-        Log.d("ExpensesApp", String.format("Login attempt from '%s' with password '%s'", mEmail, mPassword));
-
-        for (Node user : users) {
-          // Compare the entered email and password against the "registered" accounts
-          if (user.valueOf("@email").equals(mEmail)) {
-            boolean validAuthAttempt = user.valueOf("@password").equals(mPassword);
-
-            Log.d("ExpensesApp.auth", String.format("Login attempt %s", validAuthAttempt ? "successful" : "failed"));
-
-            return validAuthAttempt;
-          }
-        }
-      } catch (Exception e) {
-        // Return false (no match) if the file parsing fails or throws an exception
-        return false;
-      }
-
-      return false;
+      return authenticateUserResponse.getResult();
     }
 
     @Override
