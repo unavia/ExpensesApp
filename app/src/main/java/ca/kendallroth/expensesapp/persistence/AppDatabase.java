@@ -21,6 +21,7 @@ import java.util.List;
 
 import ca.kendallroth.expensesapp.ExpensesApp;
 import ca.kendallroth.expensesapp.R;
+import ca.kendallroth.expensesapp.persistence.dao.IAuditLogDao;
 import ca.kendallroth.expensesapp.persistence.dao.ICategoryDao;
 import ca.kendallroth.expensesapp.persistence.dao.IUserDao;
 import ca.kendallroth.expensesapp.persistence.model.Category;
@@ -44,6 +45,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract IUserDao userDao();
   public abstract ICategoryDao categoryDao();
+  public abstract IAuditLogDao auditLogDao();
 
   /**
    * Room database callbacks to initialize database
@@ -112,6 +114,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     db.delete("user", null, null);
     db.delete("category", null, null);
+    db.delete("audit_log", null,null);
   }
 
   /**
