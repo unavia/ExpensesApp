@@ -185,14 +185,15 @@ public class MainActivity extends AppCompatActivity {
     // Update the highlighted drawer item
     setSelectedDrawerItem();
 
-    // Update the Toolbar title
-    setToolbarTitle();
-
+    // TODO: Debug why this isn't working properly
     // Close the drawer if the user selected the current fragment again
-    if (getSupportFragmentManager().findFragmentByTag(CURRENT_FRAGMENT) != null) {
+    /*if (getSupportFragmentManager().findFragmentByTag(CURRENT_FRAGMENT) != null) {
       mDrawerLayout.closeDrawers();
       return;
-    }
+    }*/
+
+    // Update the Toolbar title
+    setToolbarTitle();
 
     // Load the selected fragment
     Fragment fragment = getFragment();

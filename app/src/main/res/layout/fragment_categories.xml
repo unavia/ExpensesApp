@@ -5,14 +5,7 @@
              android:layout_height="match_parent"
              tools:context="ca.kendallroth.expensesapp.fragments.CategoriesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Categories"
-        android:textSize="14sp"
-        android:textColor="@color/primaryText" />
-
+    <!-- Recycler view for Category List items -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
