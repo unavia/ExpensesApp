@@ -1,4 +1,4 @@
-package ca.kendallroth.expensesapp.persistence;
+package ca.kendallroth.expensesapp.persistence.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -7,6 +7,8 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
+
+import ca.kendallroth.expensesapp.persistence.model.User;
 
 @Dao
 public interface IUserDao {
@@ -31,7 +33,7 @@ public interface IUserDao {
   @Query("DELETE FROM user WHERE email = :email")
   int hardDeleteUser(String email);
 
-  @Query("UPDATE user SET deleted=true WHERE email = :email")
+  @Query("UPDATE user SET deleted=1 WHERE email = :email")
   int deleteUser(String email);
 
   @Query("DELETE FROM user")

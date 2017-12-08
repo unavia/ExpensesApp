@@ -12,9 +12,6 @@ import android.view.View;
 
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.persistence.AppDatabase;
-import ca.kendallroth.expensesapp.utils.AuthUtils_DEPRECATED;
-import ca.kendallroth.expensesapp.utils.response.Response;
-import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 /**
  * Fragment to allow users to view and change global settings
@@ -125,18 +122,8 @@ public class SettingsFragment extends PreferenceFragment {
     boolean didCleanupSucceed = false;
 
     try {
-      mDatabase.beginTransaction();
-
-      // Clean up the database tables
-      mDatabase.categoryDao().clear();
-      mDatabase.userDao().clear();
-
-      // TODO: Re-add database seed data
-
-      mDatabase.setTransactionSuccessful();
-      mDatabase.endTransaction();
-
-      didCleanupSucceed = true;
+      // Reset the database (clears tables and reinserts test data)
+      didCleanupSucceed = AppDatabase.resetDatabase();
     } catch (Exception e) {
       mDatabase.endTransaction();
 

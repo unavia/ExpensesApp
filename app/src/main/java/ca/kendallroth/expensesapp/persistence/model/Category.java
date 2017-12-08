@@ -1,4 +1,4 @@
-package ca.kendallroth.expensesapp.persistence;
+package ca.kendallroth.expensesapp.persistence.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

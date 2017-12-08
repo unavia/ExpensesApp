@@ -1,9 +1,11 @@
-package ca.kendallroth.expensesapp.persistence;
+package ca.kendallroth.expensesapp.persistence.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
+
+import ca.kendallroth.expensesapp.persistence.DateConverter;
 
 public class BaseModel {
 

@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.Date;
 
 import ca.kendallroth.expensesapp.persistence.AppDatabase;
-import ca.kendallroth.expensesapp.persistence.User;
+import ca.kendallroth.expensesapp.persistence.model.User;
 import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
 import ca.kendallroth.expensesapp.utils.response.IntResponse;
 import ca.kendallroth.expensesapp.utils.response.Response;

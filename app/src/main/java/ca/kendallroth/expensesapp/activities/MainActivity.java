@@ -1,11 +1,11 @@
 package ca.kendallroth.expensesapp.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -154,20 +154,28 @@ public class MainActivity extends AppCompatActivity {
    * @return Currently selected fragment
    */
   private Fragment getFragment() {
+    Fragment fragment;
+
     switch (drawerItemIndex) {
       case 0: {
-        return new DashboardFragment();
+        fragment = new DashboardFragment();
+        break;
       }
       case 1: {
-        return new TransactionsFragment();
+        fragment = new TransactionsFragment();
+        break;
       }
       case 2: {
-        return new CategoriesFragment();
+        fragment = new CategoriesFragment();
+        break;
       }
       default: {
-        return new DashboardFragment();
+        fragment = new DashboardFragment();
+        break;
       }
     }
+
+    return fragment;
   }
 
   /**
@@ -188,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Load the selected fragment
     Fragment fragment = getFragment();
-    FragmentManager fragmentManager = getFragmentManager();
+    FragmentManager fragmentManager = getSupportFragmentManager();
     fragmentManager.beginTransaction().replace(R.id.frame, fragment, CURRENT_FRAGMENT).commit();
 
     // Close the Drawer and refresh the Toolbar menu
@@ -265,8 +273,7 @@ public class MainActivity extends AppCompatActivity {
         return;
       }
 
-      // Move the app to the Android background rather than allowing the user to return
-      //  to "Login" activity
+      // Move the app to the Android background rather than allowing the user to return to "Login" activity
       moveTaskToBack(true);
     }
   }

@@ -1,4 +1,4 @@
-package ca.kendallroth.expensesapp.persistence;
+package ca.kendallroth.expensesapp.persistence.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -7,6 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
+
+import ca.kendallroth.expensesapp.persistence.DateConverter;
 
 @Entity(
     tableName = "user",

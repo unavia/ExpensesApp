@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "ca.kendallroth.expensesapp"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -20,20 +20,26 @@ android {
 }
 
 dependencies {
+    // Support libraries
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support:support-v4:26.+'
+
+    // Architecture components
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+    compile 'android.arch.lifecycle:extensions:1.0.0'
+    compile 'android.arch.persistence.room:runtime:1.0.0'
+
+    // 3rd party libraries
+    compile files('libs/dom4j-2.0.2.jar')
+    compile files('libs/jaxen-1.1.6.jar')
+    compile 'com.facebook.stetho:stetho:1.5.0'
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/dom4j-2.0.2.jar')
-    compile files('libs/jaxen-1.1.6.jar')
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:26.+'
-    compile 'android.arch.lifecycle:extensions:1.0.0-rc1';
-    compile 'android.arch.persistence.room:runtime:1.0.0-rc1';
-    compile 'com.facebook.stetho:stetho:1.5.0'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1';
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0-rc1';
     testCompile 'junit:junit:4.12'
 }

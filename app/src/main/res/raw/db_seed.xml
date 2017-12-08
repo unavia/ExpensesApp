@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<db>
+    <categories>
+        <category>
+            <meta id="1" userId="1" dateCreated="NOW" dateModified="" deleted="false" />
+            <name>Food</name>
+            <description>Groceries and necessary food</description>
+            <colour>#DEDEDE</colour>
+            <icon>food</icon>
+        </category>
+        <category>
+            <meta id="2" userId="1" />
+            <name>Clothing</name>
+            <description>Clothing and accessories</description>
+            <colour>#DEDEDE</colour>
+            <icon>clothes</icon>
+        </category>
+        <category>
+            <meta id="3" userId="1" />
+            <name>Subscriptions</name>
+            <description>Subscriptions and repetitive fees</description>
+            <colour>#DEDEDE</colour>
+            <icon>bill</icon>
+        </category>
+        <category>
+            <meta id="4" userId="1" />
+            <name>Entertainment</name>
+            <description>Personal enjoyment and spending</description>
+            <colour>#DEDEDE</colour>
+            <icon>food</icon>
+        </category>
+        <category>
+            <meta id="5" userId="1" />
+            <name>Gifts</name>
+            <description>Gifts and special occasion purchases</description>
+            <colour>#DEDEDE</colour>
+            <icon>gift</icon>
+        </category>
+    </categories>
+    <!-- DEBUG: Testing use only -->
+    <users>
+        <user>
+            <meta id="1" active="true" dateActivated="NOW" dateCreated="NOW" deleted="false" />
+            <email>kendall@example.com</email>
+            <password>hello</password>
+            <name>Kendall Roth</name>
+        </user>
+    </users>
+</db>

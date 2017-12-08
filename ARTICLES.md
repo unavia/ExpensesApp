@@ -54,3 +54,8 @@ A Navigation Drawer typically uses a main content view with several fragments th
 Room exposes two callback methods that can be used to populate or respond to database operations, `onCreate` and `onOpen`. These methods can be used to populate with initial seed data or respond each time the database is opened.
 
 - Taken from [Room DB Callbacks](https://medium.com/@srinuraop/database-create-and-open-callbacks-in-room-7ca98c3286ab)
+
+### ViewModels and RecycleAdapter
+Android recently released a set of architecture components structure to make managing app data and lifecycle easier, including `ViewModel`s and an Observable object `LiveData` that the Room database can return. This requires implementing an adapter with a corresponding ViewModel that can react to changes in the persistence layer exposed by Room.
+
+- Ideas from [Andriod Architecture Components Blog](http://blog.iamsuleiman.com/android-architecture-components-tutorial-room-livedata-viewmodel/)
