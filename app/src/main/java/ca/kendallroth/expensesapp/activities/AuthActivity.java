@@ -15,6 +15,7 @@ import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListe
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.components.ContentSwitcher;
 import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
+import ca.kendallroth.expensesapp.utils.Authorization;
 
 /**
  * Authorization activity that displays Login and Register workflows in a ViewPager
@@ -50,11 +51,14 @@ public class AuthActivity extends AppCompatActivity implements IAccountCreateLis
    * @param success Whether login attempt was successful
    */
   @Override
-  public void onLoginAttempt(boolean success) {
+  public void onLoginAttempt(boolean success, int userId) {
     // Only redirect to the home page when the login is successful
     if (!success) {
       return;
     }
+
+    // Store the current user
+    Authorization.setCurrentUser(getApplicationContext(), userId);
 
     // Set navigation history (main) and start the Main activity
     Intent mainActivityIntent = new Intent(this, MainActivity.class);

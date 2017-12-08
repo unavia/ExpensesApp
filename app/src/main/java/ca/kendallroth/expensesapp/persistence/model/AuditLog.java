@@ -4,8 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
+
+import ca.kendallroth.expensesapp.persistence.DateConverter;
 
 @Entity(
     foreignKeys = {
@@ -16,7 +19,7 @@ import java.util.Date;
             onDelete = ForeignKey.CASCADE
         )
     },
-    tableName = "category"
+    tableName = "audit_log"
 )
 public class AuditLog {
     @ColumnInfo(name = "id")
@@ -36,6 +39,7 @@ public class AuditLog {
     public String description;
 
     @ColumnInfo(name = "date_created")
+    @TypeConverters({ DateConverter.class })
     public Date dateCreated;
 
     public AuditLog(

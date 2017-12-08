@@ -24,10 +24,12 @@ import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.persistence.dao.IAuditLogDao;
 import ca.kendallroth.expensesapp.persistence.dao.ICategoryDao;
 import ca.kendallroth.expensesapp.persistence.dao.IUserDao;
+import ca.kendallroth.expensesapp.persistence.model.AuditLog;
 import ca.kendallroth.expensesapp.persistence.model.Category;
 import ca.kendallroth.expensesapp.persistence.model.User;
 
 import static java.lang.Boolean.parseBoolean;
+import static java.lang.Boolean.valueOf;
 import static java.lang.Integer.parseInt;
 
 /**
@@ -35,7 +37,7 @@ import static java.lang.Integer.parseInt;
  */
 @Database(
     entities = {
-        User.class, Category.class
+        User.class, Category.class, AuditLog.class
     },
     version = 16,
     exportSchema = false
@@ -58,9 +60,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public void onCreate(@NonNull SupportSQLiteDatabase db) {
       // DEBUG: Seed user data
       try {
-        resetDatabase();
+        populateDatabase(db);
       } catch (Exception e) {
         Log.e("ExpensesApp.db", "Adding seed user to database failed");
+        Log.e("ExpensesApp.db", e.getMessage());
       }
 
       Log.d("ExpensesApp", "Database created and populated");
@@ -117,17 +120,43 @@ public abstract class AppDatabase extends RoomDatabase {
     db.delete("audit_log", null,null);
   }
 
-  /**
-   * Reset the database with sample data
-   * @return Whether database reset succeeded
-   */
   public static boolean resetDatabase() {
-    // Access to the SQLite database is necessary to work both at setup and when rest from Settings
-    SupportSQLiteDatabase db = getDatabase().mDatabase;
+    AppDatabase db = getDatabase();
+    boolean didSucceed = false;
+
+    db.beginTransaction();
 
     // Clear the database tables
     clearTables();
 
+    didSucceed = populateDatabase();
+
+    if (didSucceed) {
+      db.setTransactionSuccessful();
+    }
+
+    db.endTransaction();
+
+    return didSucceed;
+  }
+
+  /**
+   * Reset the database with sample data
+   * @return Whether database reset succeeded
+   */
+  public static boolean populateDatabase() {
+    // Access to the SQLite database is necessary to work both at setup and when rest from Settings
+    SupportSQLiteDatabase db = getDatabase().mDatabase;
+
+    return populateDatabase(db);
+  }
+
+  /**
+   * Reset the database with sample data
+   * @param db Reference to existing SQLite database
+   * @return Whether database reset succeeded
+   */
+  public static boolean populateDatabase(SupportSQLiteDatabase db) {
     boolean didSucceed = false;
     Document document;
 

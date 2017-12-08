@@ -39,6 +39,12 @@
     </categories>
     <!-- DEBUG: Testing use only -->
     <users>
+        <user description="Unauthenticated auditing user (necessary for auditing of unknown users)">
+            <meta id="-1" active="true" dateActivated="NOW" dateCreated="NOW" deleted="false" />
+            <email>audit</email>
+            <password>******</password>
+            <name>audit</name>
+        </user>
         <user>
             <meta id="1" active="true" dateActivated="NOW" dateCreated="NOW" deleted="false" />
             <email>kendall@example.com</email>

@@ -1,11 +1,15 @@
 package ca.kendallroth.expensesapp.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Date;
 
 import ca.kendallroth.expensesapp.persistence.AppDatabase;
 import ca.kendallroth.expensesapp.persistence.model.User;
+import ca.kendallroth.expensesapp.utils.response.AuthenticationResponse;
 import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
 import ca.kendallroth.expensesapp.utils.response.IntResponse;
 import ca.kendallroth.expensesapp.utils.response.Response;
@@ -19,14 +23,38 @@ import ca.kendallroth.expensesapp.utils.response.StatusCode;
 public abstract class Authorization {
 
   /**
+   * Store the current user id and email upon login
+   * @param userId     User id
+   */
+  public static void setCurrentUser(Context context, int userId) {
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+    SharedPreferences.Editor editor = settings.edit();
+    editor.putInt("userId", userId);
+    editor.apply();
+  }
+
+
+  /**
+   * Get the current user's id
+   * @param context Application context
+   * @return Current user's id
+   */
+  public static int getCurrentUserId(Context context) {
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+    return settings.getInt("userId", 0);
+  }
+
+
+  /**
    * Determine whether a user's credentials are valid authenticated combination
    * @param email    Account email address
    * @param password Account password
    * @return Whether user is authenticated
    */
-  public static BooleanResponse authenticateUser(String email, String password) {
+  public static AuthenticationResponse authenticateUser(String email, String password) {
     AppDatabase database = AppDatabase.getDatabase();
     User requestedUser = null;
+    String auditLogMessage;
 
     // Find the requested user in order to compare the passwords
     try {
@@ -36,17 +64,18 @@ public abstract class Authorization {
     } catch (Exception e) {
       AppDatabase.destroyInstance();
 
-      Log.e("ExpensesApp.auth", String.format("Error finding user with email '%s' for authentication", email));
+      auditLogMessage = String.format("Authentication attempt made by [%s] had database error", email);
+      AuditLogUtils.log(-1, "authenticate_user_database_error", auditLogMessage, "auth");
 
-      return new BooleanResponse(StatusCode.FAILURE, "authenticate_user_error", false);
+      return new AuthenticationResponse(StatusCode.FAILURE, "authenticate_user_error", false, -1);
     }
 
     // Only try authentication if the user exists
     if (requestedUser == null) {
-      // TODO: Add audit logging
-      Log.d("ExpensesApp.auth", String.format("No user with email '%s' was found for authentication", email));
+      auditLogMessage = String.format("Authentication attempt made by [%s] did not match any users", email);
+      AuditLogUtils.log(-1, "authenticate_user_not_found", auditLogMessage, "auth");
 
-      return new BooleanResponse(StatusCode.ERROR, "authenticate_user_not_found", false);
+      return new AuthenticationResponse(StatusCode.ERROR, "authenticate_user_not_found", false, -1);
     }
 
     // TODO: Hash password before comparison
@@ -54,21 +83,23 @@ public abstract class Authorization {
     // Verify that the requested password matches the user's password
     boolean isAuthenticated = requestedUser.password.equals(password);
 
-    String debugMessage;
     String resultMessage;
+    int userId;
 
     // Indicate whether the authentication succeeded
     if (isAuthenticated) {
-      debugMessage = String.format("User with email '%s' authenticated successfully", email);
+      auditLogMessage = String.format("Authentication attempt made by [%s] succeeded", email);
       resultMessage = "authenticate_user_succeeded";
+      userId = requestedUser.id;
     } else {
-      debugMessage = String.format("User with email '%s' authentication failed", email);
+      auditLogMessage = String.format("Authentication attempt made by [%s] failed", email);
       resultMessage = "authenticate_user_failed";
+      userId = -1;
     }
 
-    Log.d("ExpensesApp.auth", debugMessage);
+    AuditLogUtils.log(-1, resultMessage, auditLogMessage, "auth");
 
-    return new BooleanResponse(StatusCode.SUCCESS, resultMessage, isAuthenticated);
+    return new AuthenticationResponse(StatusCode.SUCCESS, resultMessage, isAuthenticated, userId);
   }
 
 
@@ -204,12 +235,14 @@ public abstract class Authorization {
     AppDatabase database = AppDatabase.getDatabase();
     long newRowId = 0;
     BooleanResponse userExists;
+    String auditLogMessage;
 
     // Only create the user if the email is unique
     userExists = checkUserExists(email);
 
     if (userExists.getResult()) {
-      Log.d("ExpensesApp.auth", String.format("User with email '%s' already exists", email));
+      auditLogMessage = String.format("Create account for [%s] found existing user", email);
+      AuditLogUtils.log(-1, "create_user_already_exists", auditLogMessage, "auth");
 
       return new Response(StatusCode.ERROR, "create_user_already_exists");
     }
@@ -227,28 +260,27 @@ public abstract class Authorization {
     } catch(Exception e) {
       AppDatabase.destroyInstance();
 
-      Log.e("ExpensesApp.auth", String.format("Error creating account with email '%s' and password '%s'", email, password));
+      auditLogMessage = String.format("Create account for [%s] had database error", email);
+      AuditLogUtils.log(-1, "create_user_database_error", auditLogMessage, "auth");
 
       return new Response(StatusCode.FAILURE, "create_user_failed");
     }
 
     StatusCode resultCode;
-    String debugMessage;
     String resultMessage;
 
     // Indicate if the user was created
     if (newRowId > 0) {
       resultCode = StatusCode.SUCCESS;
-      debugMessage = String.format("User created successfully with email '%s' and password '%s'", email, password);
+      auditLogMessage = String.format("Create account for [%s] succeeded", email);
       resultMessage = "create_user_succeeded";
     } else {
       resultCode = StatusCode.ERROR;
-      debugMessage = String.format("User creation failed with email '%s' and password '%s'", email, password);
+      auditLogMessage = String.format("Create account for [%s] failed", email);
       resultMessage = "create_user_failed";
     }
 
-    // TODO: Add audit logging
-    Log.d("ExpensesApp.auth", debugMessage);
+    AuditLogUtils.log(-1, resultMessage, auditLogMessage, "auth");
 
     return new Response(resultCode, resultMessage);
   }

@@ -37,7 +37,10 @@ import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.ClearableFragment;
 import ca.kendallroth.expensesapp.utils.ScrollableFragment;
 import ca.kendallroth.expensesapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.response.AuthenticationResponse;
 import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
+import ca.kendallroth.expensesapp.utils.response.IntResponse;
+import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -95,8 +98,9 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
     /**
      * Trigger a login attempt response
      * @param success Whether login attempt was successful
+     * @param userId  Authenticated User id
      */
-    public void onLoginAttempt(boolean success);
+    public void onLoginAttempt(boolean success, int userId);
   }
 
   @Override
@@ -401,7 +405,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
   /**
    * Represents an asynchronous login/registration task used to authenticate the user.
    */
-  private class LoginTask extends AsyncTask<Void, Void, Boolean> {
+  private class LoginTask extends AsyncTask<Void, Void, AuthenticationResponse> {
 
     private final String mEmail;
     private final String mPassword;
@@ -412,30 +416,28 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected AuthenticationResponse doInBackground(Void... params) {
       // TODO: attempt authentication against a network service.
 
       try {
         // Simulate network access.
         Thread.sleep(2000);
       } catch (InterruptedException e) {
-        return false;
+        return new AuthenticationResponse(StatusCode.FAILURE, "authenticate_user_network_error", false, -1);
       }
 
       // Authenticate the user with the provided information
-      BooleanResponse authenticateUserResponse = Authorization.authenticateUser(mEmail, mPassword);
-
-      return authenticateUserResponse.getResult();
+      return Authorization.authenticateUser(mEmail, mPassword);
     }
 
     @Override
-    protected void onPostExecute(final Boolean success) {
+    protected void onPostExecute(final AuthenticationResponse response) {
       mAuthTask = null;
       mProgressDialog.dismiss();
 
-      if (success) {
+      if (response.didAuthenticate()) {
         // Indicate the success of the login attempt in the parent callback
-        mILoginAttemptListener.onLoginAttempt(true);
+        mILoginAttemptListener.onLoginAttempt(true, response.getUserId());
       } else {
         mPasswordViewLayout.setError(getString(R.string.error_incorrect_password));
         mPasswordInput.requestFocus();
@@ -445,7 +447,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
       View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
       // Define a snackbar based on the operation status
-      CharSequence snackbarResource = success
+      CharSequence snackbarResource = response.didAuthenticate()
           ? getString(R.string.success_login)
           : getString(R.string.failure_login);
       Snackbar resultSnackbar = Snackbar.make(snackbarRoot, snackbarResource, Snackbar.LENGTH_SHORT);

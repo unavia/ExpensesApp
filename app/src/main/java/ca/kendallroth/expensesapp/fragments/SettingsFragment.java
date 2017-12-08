@@ -117,16 +117,12 @@ public class SettingsFragment extends PreferenceFragment {
    * Completely cleans the database and then refills with initial data
    */
   public void onClearDatabaseConfirm() {
-    AppDatabase mDatabase = AppDatabase.getDatabase();
-
     boolean didCleanupSucceed = false;
 
     try {
       // Reset the database (clears tables and reinserts test data)
       didCleanupSucceed = AppDatabase.resetDatabase();
     } catch (Exception e) {
-      mDatabase.endTransaction();
-
       Log.e("ExpensesApp.db", "Clearing the database caused an error");
     }
     AppDatabase.destroyInstance();
