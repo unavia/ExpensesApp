@@ -27,6 +27,9 @@ public interface IUserDao {
   @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
   public User getUser(String email);
 
+  @Query("SELECT email FROM user WHERE id = :userId LIMIT 1")
+  public String getUserEmail(int userId);
+
   @Update(onConflict = OnConflictStrategy.REPLACE)
   int updateUser(User user);
 
