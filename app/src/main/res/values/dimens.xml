@@ -7,6 +7,12 @@
     <dimen name="elevation_toolbar">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <!-- Lists and items -->
+    <dimen name="list_vmargin">8dp</dimen>
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="list_item_hmargin">16dp</dimen>
+    <dimen name="list_item_font_size">16sp</dimen>
+
     <!-- Main drawer -->
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">135dp</dimen>

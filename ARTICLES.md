@@ -59,3 +59,13 @@ Room exposes two callback methods that can be used to populate or respond to dat
 Android recently released a set of architecture components structure to make managing app data and lifecycle easier, including `ViewModel`s and an Observable object `LiveData` that the Room database can return. This requires implementing an adapter with a corresponding ViewModel that can react to changes in the persistence layer exposed by Room.
 
 - Ideas from [Andriod Architecture Components Blog](http://blog.iamsuleiman.com/android-architecture-components-tutorial-room-livedata-viewmodel/)
+
+### Dynamically Finding Drawables
+Drawables can be dynamically found and used by getting the resource identifier based on the resource name and type. For instance, to find a category icon can be expressed as follows: `getResources().getIdentifier("resource_name", "drawable", getPackageName());`;
+
+- Taken from [Stack Overflow - How to get Images dynamically](https://stackoverflow.com/questions/9156698/how-to-get-images-dynamically-from-drawable-folder)
+
+### Tinting ImageViews
+`ImageView` components can be tinted be setting the `colorFilter` property with `imageView.setColourFilter(Color.parseColor("..."));`
+
+- Taken from [Stack Overflow - How to set tint for Image View](https://stackoverflow.com/questions/20121938/how-to-set-tint-for-an-image-view-programmatically-in-android)

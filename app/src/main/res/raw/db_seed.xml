@@ -5,36 +5,36 @@
             <meta id="1" userId="1" dateCreated="NOW" dateModified="" deleted="false" />
             <name>Food</name>
             <description>Groceries and necessary food</description>
-            <colour>#DEDEDE</colour>
-            <icon>food</icon>
+            <colour>#009688</colour>
+            <icon>shopping_cart</icon>
         </category>
         <category>
             <meta id="2" userId="1" />
             <name>Clothing</name>
             <description>Clothing and accessories</description>
-            <colour>#DEDEDE</colour>
-            <icon>clothes</icon>
+            <colour>#03A9F4</colour>
+            <icon>face</icon>
         </category>
         <category>
             <meta id="3" userId="1" />
             <name>Subscriptions</name>
             <description>Subscriptions and repetitive fees</description>
-            <colour>#DEDEDE</colour>
-            <icon>bill</icon>
+            <colour>#757575</colour>
+            <icon>payment</icon>
         </category>
         <category>
             <meta id="4" userId="1" />
             <name>Entertainment</name>
             <description>Personal enjoyment and spending</description>
-            <colour>#DEDEDE</colour>
-            <icon>food</icon>
+            <colour>#673AB7</colour>
+            <icon>theaters</icon>
         </category>
         <category>
             <meta id="5" userId="1" />
             <name>Gifts</name>
             <description>Gifts and special occasion purchases</description>
-            <colour>#DEDEDE</colour>
-            <icon>gift</icon>
+            <colour>#E91E63</colour>
+            <icon>today</icon>
         </category>
     </categories>
     <!-- DEBUG: Testing use only -->
