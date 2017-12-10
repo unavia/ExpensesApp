@@ -38,9 +38,34 @@ The Soft Keyboard can be hidden by first checking for the currently focused view
 - Taken from [Stack Overflow - Close/Hide the Android soft keyboard](https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard)
 
 ### Access the Android shell
-Viewing the app's private files is possible through the use of the Android shell (ADB). Navigate to the project directory and run `adb shell` in a terminal. Inside the shell, type `run-as expensesapp` to set the shell permission, the list the directory files (`ls files/`).
+Viewing the app's private files is possible through the use of the Android shell (ADB). Navigate to the project directory and run `adb shell` in a terminal. Inside the shell, type `run-as ca.kendallroth.expensesapp` to set the shell permission, the list the directory files (`ls files/`).
 
 ### Pass data between Activities
 Passing data to a new Activity is as simple as properly using `intent.putExtras()` when creating the Intent - passing data back from the same Activity is also quite simple. Rather than call `startActivity` we call `startActivityForResult()` which will call the class's overriden `onActivityResult()` method when the Activity returns.
 
 - Taken from : [Stack Overflow - How to pass data from 2nd activity to 1st activity when pressed back android](https://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android)
+
+### Navigation Drawer
+A Navigation Drawer typically uses a main content view with several fragments that are displayed based on the selected menu options.
+
+- Taken from [Android Sliding Menu using Navigation Drawer](https://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/)
+
+### Room DB Callbacks
+Room exposes two callback methods that can be used to populate or respond to database operations, `onCreate` and `onOpen`. These methods can be used to populate with initial seed data or respond each time the database is opened.
+
+- Taken from [Room DB Callbacks](https://medium.com/@srinuraop/database-create-and-open-callbacks-in-room-7ca98c3286ab)
+
+### ViewModels and RecycleAdapter
+Android recently released a set of architecture components structure to make managing app data and lifecycle easier, including `ViewModel`s and an Observable object `LiveData` that the Room database can return. This requires implementing an adapter with a corresponding ViewModel that can react to changes in the persistence layer exposed by Room.
+
+- Ideas from [Andriod Architecture Components Blog](http://blog.iamsuleiman.com/android-architecture-components-tutorial-room-livedata-viewmodel/)
+
+### Dynamically Finding Drawables
+Drawables can be dynamically found and used by getting the resource identifier based on the resource name and type. For instance, to find a category icon can be expressed as follows: `getResources().getIdentifier("resource_name", "drawable", getPackageName());`;
+
+- Taken from [Stack Overflow - How to get Images dynamically](https://stackoverflow.com/questions/9156698/how-to-get-images-dynamically-from-drawable-folder)
+
+### Tinting ImageViews
+`ImageView` components can be tinted be setting the `colorFilter` property with `imageView.setColourFilter(Color.parseColor("..."));`
+
+- Taken from [Stack Overflow - How to set tint for Image View](https://stackoverflow.com/questions/20121938/how-to-set-tint-for-an-image-view-programmatically-in-android)

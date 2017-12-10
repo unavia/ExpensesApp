@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.BoringLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,9 +33,14 @@ import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.activities.RequestPasswordResetActivity;
 import ca.kendallroth.expensesapp.activities.ResetPasswordActivity;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.ClearableFragment;
 import ca.kendallroth.expensesapp.utils.ScrollableFragment;
 import ca.kendallroth.expensesapp.utils.XMLFileUtils;
+import ca.kendallroth.expensesapp.utils.response.AuthenticationResponse;
+import ca.kendallroth.expensesapp.utils.response.BooleanResponse;
+import ca.kendallroth.expensesapp.utils.response.IntResponse;
+import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -92,8 +98,9 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
     /**
      * Trigger a login attempt response
      * @param success Whether login attempt was successful
+     * @param userId  Authenticated User id
      */
-    public void onLoginAttempt(boolean success);
+    public void onLoginAttempt(boolean success, int userId);
   }
 
   @Override
@@ -192,6 +199,17 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
         attemptLogin();
       }
     });
+    mLoginButton.setOnLongClickListener(new View.OnLongClickListener() {
+      @Override
+      public boolean onLongClick(View v) {
+        // Show a progress spinner, and kick off a background task to perform the sample user login attempt.
+        mProgressDialog.show();
+        mAuthTask = new LoginTask("kendall@example.com", "hello");
+        mAuthTask.execute((Void) null);
+
+        return true;
+      }
+    });
 
     // Forgot password button
     mForgotPasswordButton = (Button) loginView.findViewById(R.id.forgot_password_button);
@@ -222,6 +240,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
 
   /**
    * Start the Reset Password activity
+   * @param accountEmail Seed email for Reset Password activity
    */
   private void startResetPasswordActivity(String accountEmail) {
     // Start the Reset Password activity and set the result/callback code
@@ -386,7 +405,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
   /**
    * Represents an asynchronous login/registration task used to authenticate the user.
    */
-  private class LoginTask extends AsyncTask<Void, Void, Boolean> {
+  private class LoginTask extends AsyncTask<Void, Void, AuthenticationResponse> {
 
     private final String mEmail;
     private final String mPassword;
@@ -397,53 +416,28 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected AuthenticationResponse doInBackground(Void... params) {
       // TODO: attempt authentication against a network service.
 
       try {
         // Simulate network access.
         Thread.sleep(2000);
       } catch (InterruptedException e) {
-        return false;
+        return new AuthenticationResponse(StatusCode.FAILURE, "authenticate_user_network_error", false, -1);
       }
 
-      Document document;
-
-      try {
-        // Read XML file with user information
-        document = XMLFileUtils.getFile(getActivity().getBaseContext(), XMLFileUtils.USERS_FILE_NAME);
-
-        // Select all the "user" nodes in the document
-        List<Node> users = document.selectNodes("/users/user");
-
-        Log.d("ExpensesApp", String.format("Login attempt from '%s' with password '%s'", mEmail, mPassword));
-
-        for (Node user : users) {
-          // Compare the entered email and password against the "registered" accounts
-          if (user.valueOf("@email").equals(mEmail)) {
-            boolean validAuthAttempt = user.valueOf("@password").equals(mPassword);
-
-            Log.d("ExpensesApp.auth", String.format("Login attempt %s", validAuthAttempt ? "successful" : "failed"));
-
-            return validAuthAttempt;
-          }
-        }
-      } catch (Exception e) {
-        // Return false (no match) if the file parsing fails or throws an exception
-        return false;
-      }
-
-      return false;
+      // Authenticate the user with the provided information
+      return Authorization.authenticateUser(mEmail, mPassword);
     }
 
     @Override
-    protected void onPostExecute(final Boolean success) {
+    protected void onPostExecute(final AuthenticationResponse response) {
       mAuthTask = null;
       mProgressDialog.dismiss();
 
-      if (success) {
+      if (response.didAuthenticate()) {
         // Indicate the success of the login attempt in the parent callback
-        mILoginAttemptListener.onLoginAttempt(true);
+        mILoginAttemptListener.onLoginAttempt(true, response.getUserId());
       } else {
         mPasswordViewLayout.setError(getString(R.string.error_incorrect_password));
         mPasswordInput.requestFocus();
@@ -453,7 +447,7 @@ public class LoginFragment extends Fragment implements ClearableFragment, Scroll
       View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
       // Define a snackbar based on the operation status
-      CharSequence snackbarResource = success
+      CharSequence snackbarResource = response.didAuthenticate()
           ? getString(R.string.success_login)
           : getString(R.string.failure_login);
       Snackbar resultSnackbar = Snackbar.make(snackbarRoot, snackbarResource, Snackbar.LENGTH_SHORT);

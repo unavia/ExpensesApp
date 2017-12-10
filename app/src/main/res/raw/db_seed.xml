@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<db>
+    <categories>
+        <category>
+            <meta id="1" userId="1" dateCreated="NOW" dateModified="" deleted="false" />
+            <name>Food</name>
+            <description>Groceries and necessary food</description>
+            <colour>#009688</colour>
+            <icon>shopping_cart</icon>
+        </category>
+        <category>
+            <meta id="2" userId="1" />
+            <name>Clothing</name>
+            <description>Clothing and accessories</description>
+            <colour>#03A9F4</colour>
+            <icon>face</icon>
+        </category>
+        <category>
+            <meta id="3" userId="1" />
+            <name>Subscriptions</name>
+            <description>Subscriptions and repetitive fees</description>
+            <colour>#757575</colour>
+            <icon>payment</icon>
+        </category>
+        <category>
+            <meta id="4" userId="1" />
+            <name>Entertainment</name>
+            <description>Personal enjoyment and spending</description>
+            <colour>#673AB7</colour>
+            <icon>theaters</icon>
+        </category>
+        <category>
+            <meta id="5" userId="1" />
+            <name>Gifts</name>
+            <description>Gifts and special occasion purchases</description>
+            <colour>#E91E63</colour>
+            <icon>today</icon>
+        </category>
+    </categories>
+    <!-- DEBUG: Testing use only -->
+    <users>
+        <user description="Unauthenticated auditing user (necessary for auditing of unknown users)">
+            <meta id="-1" active="true" dateActivated="NOW" dateCreated="NOW" deleted="false" />
+            <email>audit</email>
+            <password>******</password>
+            <name>audit</name>
+        </user>
+        <user>
+            <meta id="1" active="true" dateActivated="NOW" dateCreated="NOW" deleted="false" />
+            <email>kendall@example.com</email>
+            <password>hello</password>
+            <name>Kendall Roth</name>
+        </user>
+    </users>
+</db>

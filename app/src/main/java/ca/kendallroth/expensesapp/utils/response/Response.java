@@ -1,12 +1,11 @@
-package ca.kendallroth.expensesapp.utils;
+package ca.kendallroth.expensesapp.utils.response;
 
 /**
  * Utility class to indicate the response of an action
  */
 public class Response {
-  private StatusCode statusCode;
-  private String message;
-  private Object data;
+  protected StatusCode statusCode;
+  protected String message;
 
   public StatusCode getStatusCode() {
     return this.statusCode;
@@ -14,10 +13,6 @@ public class Response {
 
   public String getMessage() {
     return this.message;
-  }
-
-  public Object getData() {
-    return this.data;
   }
 
   /**
@@ -28,18 +23,6 @@ public class Response {
   public Response(StatusCode statusCode, String message) {
     this.statusCode = statusCode;
     this.message = message;
-  }
-
-  /**
-   * Response from an operation
-   * @param statusCode Operation completion status code
-   * @param message    Operation completion message
-   * @param data       Generic completion data
-   */
-  public Response(StatusCode statusCode, String message, Object data) {
-    this.statusCode = statusCode;
-    this.message = message;
-    this.data = data;
   }
 
   /**

@@ -18,10 +18,10 @@ import android.widget.EditText;
 
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.utils.AccountUtils;
-import ca.kendallroth.expensesapp.utils.AuthUtils;
+import ca.kendallroth.expensesapp.utils.Authorization;
 import ca.kendallroth.expensesapp.utils.ClearableFragment;
-import ca.kendallroth.expensesapp.utils.Response;
-import ca.kendallroth.expensesapp.utils.StatusCode;
+import ca.kendallroth.expensesapp.utils.response.Response;
+import ca.kendallroth.expensesapp.utils.response.StatusCode;
 
 /**
  * Fragment for enabling a user to register for the app
@@ -287,10 +287,10 @@ public class RegisterFragment extends Fragment implements ClearableFragment {
         return false;
       }
 
-      Response createAccountResponse = AuthUtils.addAuthUser(mEmail, mName, mPassword);
+      // Create the user account
+      Response createUserResponse = Authorization.createUser(mName, mEmail, mPassword);
 
-      // TODO: Do something with the response
-      return createAccountResponse.getStatusCode() == StatusCode.SUCCESS ? true : false;
+      return createUserResponse.getStatusCode() == StatusCode.SUCCESS;
     }
 
     @Override

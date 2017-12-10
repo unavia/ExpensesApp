@@ -7,12 +7,11 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 
 import ca.kendallroth.expensesapp.R;
-import ca.kendallroth.expensesapp.utils.AuthUtils;
-import ca.kendallroth.expensesapp.utils.Response;
-import ca.kendallroth.expensesapp.utils.StatusCode;
+import ca.kendallroth.expensesapp.persistence.AppDatabase;
 
 /**
  * Fragment to allow users to view and change global settings
@@ -113,16 +112,25 @@ public class SettingsFragment extends PreferenceFragment {
   }
 
   /**
-   * Handler for the Clear Database confirmation dialog confirm action
+   * Handler for the Clear Database confirmation dialog confirm action.
+   *
+   * Completely cleans the database and then refills with initial data
    */
   public void onClearDatabaseConfirm() {
-    // Clear the authentication database
-    Response clearDatabaseResponse = AuthUtils.resetAuthFile();
+    boolean didCleanupSucceed = false;
+
+    try {
+      // Reset the database (clears tables and reinserts test data)
+      didCleanupSucceed = AppDatabase.resetDatabase();
+    } catch (Exception e) {
+      Log.e("ExpensesApp.db", "Clearing the database caused an error");
+    }
+    AppDatabase.destroyInstance();
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)
     View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
-    CharSequence snackbarResource = clearDatabaseResponse.getStatusCode() == StatusCode.SUCCESS
+    CharSequence snackbarResource = didCleanupSucceed
         ? getString(R.string.success_clear_database)
         : getString(R.string.failure_clear_database);
     Snackbar resultSnackbar = Snackbar.make(snackbarRoot, snackbarResource, Snackbar.LENGTH_SHORT);
@@ -144,13 +152,14 @@ public class SettingsFragment extends PreferenceFragment {
    * Handler for the Delete Account confirmation dialog confirm action
    */
   public void onDeleteAccountConfirm() {
-    // TODO: Delete the user's account
-    Response accountDeleteResponse = AuthUtils.removeAuthUser("", "");
+    // TODO: Delete the user's account from authentication file and DB
+
+    boolean didDeleteSucceed = false;
 
     // Need to use the android "content" layout as the snackbar anchor (since this is a fragment)
     View snackbarRoot = getActivity().findViewById(android.R.id.content);
 
-    CharSequence snackbarResource = accountDeleteResponse.getStatusCode() == StatusCode.SUCCESS
+    CharSequence snackbarResource = didDeleteSucceed
         ? getString(R.string.success_delete_account)
         : getString(R.string.failure_delete_account);
 
