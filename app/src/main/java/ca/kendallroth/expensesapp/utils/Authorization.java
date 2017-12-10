@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import ca.kendallroth.expensesapp.persistence.AppDatabase;
 import ca.kendallroth.expensesapp.persistence.model.User;
 import ca.kendallroth.expensesapp.utils.response.AuthenticationResponse;
@@ -229,7 +231,7 @@ public abstract class Authorization {
    * @param name     User's first and last names
    * @param email    Account email address
    * @param password Account password
-   * @return
+   * @return Whether user account was created successfully
    */
   public static Response createUser(String name, String email, String password){
     AppDatabase database = AppDatabase.getDatabase();

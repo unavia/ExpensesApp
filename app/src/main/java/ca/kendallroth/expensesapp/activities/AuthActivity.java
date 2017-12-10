@@ -1,5 +1,6 @@
 package ca.kendallroth.expensesapp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import ca.kendallroth.expensesapp.ExpensesApp;
 import ca.kendallroth.expensesapp.fragments.LoginFragment;
 import ca.kendallroth.expensesapp.fragments.LoginFragment.ILoginAttemptListener;
 import ca.kendallroth.expensesapp.fragments.RegisterFragment;
@@ -15,12 +19,15 @@ import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListe
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.components.ContentSwitcher;
 import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
+import ca.kendallroth.expensesapp.modules.DaggerAppComponent;
 import ca.kendallroth.expensesapp.utils.Authorization;
 
 /**
  * Authorization activity that displays Login and Register workflows in a ViewPager
  */
 public class AuthActivity extends AppCompatActivity implements IAccountCreateListener, ILoginAttemptListener {
+
+  @Inject Context mAppContext;
 
   private ArrayList<Fragment> mAdapterFragments;
   private AccountTabAdapter mTabAdapter;
@@ -30,6 +37,9 @@ public class AuthActivity extends AppCompatActivity implements IAccountCreateLis
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_auth);
+
+    // Inject Dagger dependencies (technically unnecessary...)
+    ((ExpensesApp)getApplicationContext()).getDaggerComponent().inject(this);
 
     // Instantiate fragments and add to fragment list (never removed/destroyed)
     Fragment loginFragment = LoginFragment.newInstance("Login");
@@ -58,7 +68,7 @@ public class AuthActivity extends AppCompatActivity implements IAccountCreateLis
     }
 
     // Store the current user
-    Authorization.setCurrentUser(getApplicationContext(), userId);
+    Authorization.setCurrentUser(mAppContext, userId);
 
     // Set navigation history (main) and start the Main activity
     Intent mainActivityIntent = new Intent(this, MainActivity.class);
