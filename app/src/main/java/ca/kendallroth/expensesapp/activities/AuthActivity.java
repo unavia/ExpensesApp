@@ -19,7 +19,6 @@ import ca.kendallroth.expensesapp.fragments.RegisterFragment.IAccountCreateListe
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.components.ContentSwitcher;
 import ca.kendallroth.expensesapp.adapters.AccountTabAdapter;
-import ca.kendallroth.expensesapp.modules.DaggerAppComponent;
 import ca.kendallroth.expensesapp.utils.Authorization;
 
 /**
