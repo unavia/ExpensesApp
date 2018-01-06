@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">ExpensesApp</string>
+    <string name="app_title">Expenses App</string>
+
+    <!-- Text -->
+    <string name="text_about_information">ExpensesApp stemmed from the idea that keeping track of smaller expenses can often be difficult and seem pointless. However, over time these small purchases do add up and can cause unwanted surprises. The easiest way to make this more simple would be to make it more fun, hence the idea of developing an app that made this experience fun became my goal.</string>
+    <string name="text_about_contact">Contact me through my email or portfolio site!</string>
+    <string name="title_contact">Contact Me</string>
+
+    <!-- Content Descriptions -->
+    <string name="description_logo">App Logo</string>
 
     <!-- Message codes -->
     <string name="code_failure_file_context">File context not initialized</string>
@@ -10,6 +19,8 @@
     <string name="button_login">Login</string>
     <string name="button_request_password_reset">Request Reset</string>
     <string name="button_reset_password">Reset Password</string>
+    <string name="button_contact_email">Email</string>
+    <string name="button_contact_site">Site</string>
 
     <!-- Content Descriptions ("alt") tags -->
     <string name="content_app_logo">App Logo</string>
@@ -102,7 +113,4 @@
     <string name="drawer_other_group">Other</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

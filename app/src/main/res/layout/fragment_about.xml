@@ -1,0 +1,81 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.kendallroth.expensesapp.fragments.AboutFragment">
+
+    <!-- App logo -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/description_logo"
+        android:maxWidth="@dimen/about_logo_width"
+        android:src="@drawable/logo_circle_border"/>
+
+    <!-- App title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <!-- App information -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/text_about_information"/>
+
+    <!-- Contact title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_contact"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <!-- Contact text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/text_about_contact"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Email button -->
+        <Button
+            android:id="@+id/button_email"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_contact_email" />
+
+        <!-- Site button -->
+        <Button
+            android:id="@+id/button_site"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_contact_site"/>
+    </LinearLayout>
+
+</LinearLayout>

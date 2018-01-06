@@ -6,6 +6,7 @@
 
     <dimen name="elevation_toolbar">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="about_logo_width">30dp</dimen>
 
     <!-- Lists and items -->
     <dimen name="list_vmargin">8dp</dimen>
