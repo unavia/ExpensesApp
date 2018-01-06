@@ -69,3 +69,9 @@ Drawables can be dynamically found and used by getting the resource identifier b
 `ImageView` components can be tinted be setting the `colorFilter` property with `imageView.setColourFilter(Color.parseColor("..."));`
 
 - Taken from [Stack Overflow - How to set tint for Image View](https://stackoverflow.com/questions/20121938/how-to-set-tint-for-an-image-view-programmatically-in-android)
+
+### Dagger 2
+Dagger 2 is a Google library developed to simplify the process of injecting dependencies.
+
+- [Dagger 2 Android Tutorial](https://causeyourestuck.io/2017/02/18/dagger2-android-tutorial/)
+- [Dagger 2 - The Simple Approach](https://android.jlelse.eu/dagger-2-the-simplest-approach-3e23502c4cab)
