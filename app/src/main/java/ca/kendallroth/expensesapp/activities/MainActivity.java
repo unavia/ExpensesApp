@@ -124,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
       }
       case R.id.nav_about: {
         mDrawerLayout.closeDrawers();
+
+        // Start the About activity
+        Intent settingsIntent = new Intent(getApplicationContext(), AboutActivity.class);
+        startActivity(settingsIntent);
         return true;
       }
       case R.id.nav_settings: {
