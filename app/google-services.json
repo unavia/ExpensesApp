@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "578718586963",
+    "firebase_url": "https://expensesapp-bffdb.firebaseio.com",
+    "project_id": "expensesapp-bffdb",
+    "storage_bucket": "expensesapp-bffdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578718586963:android:292f2f81ac94ee01",
+        "android_client_info": {
+          "package_name": "ca.kendallroth.expensesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578718586963-98rmtb5pltiv8j7871gdqu51ddhd6m0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.kendallroth.expensesapp",
+            "certificate_hash": "f6b0a2076efd02897bdb0684ab1f3baf931b98fd"
+          }
+        },
+        {
+          "client_id": "578718586963-qocj6p1jg2q89729c76pqnmiq2o5r7me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_ujrr9NesonEUKqlCpXSaF68BgbfOPN4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578718586963-qocj6p1jg2q89729c76pqnmiq2o5r7me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
