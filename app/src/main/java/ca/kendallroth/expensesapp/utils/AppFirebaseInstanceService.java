@@ -29,7 +29,7 @@ public class AppFirebaseInstanceService extends FirebaseInstanceIdService {
    * @param token Firebase token generated after a refresh
    */
   private void sendRegistrationToServer(String token) {
-    String registrationMessage = String.format("A device with token '%s' has registered for the ExpensesApp application.\n\n%s", token, token);
+    String registrationMessage = String.format("A device has registered for the ExpensesApp application.\n\nToken:\n\n%s", token, token);
 
     // Create and prompt the user to send an email with the token information
     Intent emailIntent = new Intent(Intent.ACTION_SEND);
