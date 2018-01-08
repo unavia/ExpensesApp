@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import ca.kendallroth.expensesapp.BuildConfig;
 import ca.kendallroth.expensesapp.R;
 import ca.kendallroth.expensesapp.utils.PermissionsUtils;
 import ca.kendallroth.expensesapp.utils.response.FileDownloadResponse;
@@ -220,7 +223,27 @@ public class AboutFragment extends Fragment {
       Snackbar resultSnackbar = Snackbar.make(snackbarRoot, snackbarResource, Snackbar.LENGTH_SHORT);
       resultSnackbar.show();
 
-      // TODO: Display downloaded PDF (start intent)
+      // Only display downloaded PDF if download was successful
+      if (response.getStatusCode() != StatusCode.SUCCESS) {
+        return;
+      }
+
+      // Get downloaded file
+      File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/kendall_resume.pdf");
+      Uri filePath = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider", downloadedFile);
+
+      // Open PDF with an intent
+      Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+      pdfIntent.setDataAndType(filePath, "application/pdf");
+      pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+      try {
+        startActivity(pdfIntent);
+      } catch (Exception e) {
+        Snackbar.make(snackbarRoot, "No application found for PDF", Snackbar.LENGTH_SHORT).show();
+        Log.e("ExpensesApp", "view_resume_succeeded");
+      }
     }
   }
 }
