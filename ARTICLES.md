@@ -88,3 +88,15 @@ Saving a file to the Downloads folder requires requesting permission from the us
 - [Android - Request Permissions](https://developer.android.com/training/permissions/requesting.html)
 - [Stack Overflow - Check permissions in fRagment](https://stackoverflow.com/questions/40760625/how-to-check-permission-in-fragment)
 - [Stack Overflow - Read file from URI](https://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed)
+
+### Firebase Notifications
+Responding to a Firebase message when the app is open requires creating a Firebase messaging service and creating a notification channel within the app.
+
+- [Firebase Messaging](https://firebase.google.com/docs/cloud-messaging/android/first-message?authuser=1)
+- [Stack Overflow - Notification Channel](https://stackoverflow.com/questions/45462666/notificationcompat-builder-deprecated-in-android-o)
+- [Android - Notification Channel](https://developer.android.com/guide/topics/ui/notifiers/notifications.html)
+
+### Send Email
+Creating an email to send is as easy as creating an Intent.
+
+- [Stack Overflow - Email with Intent](https://stackoverflow.com/questions/2197741/how-can-i-send-emails-from-my-android-application)
