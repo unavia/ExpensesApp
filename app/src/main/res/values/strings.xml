@@ -6,6 +6,7 @@
     <string name="text_about_information">ExpensesApp stemmed from the idea that keeping track of smaller expenses can often be difficult and seem pointless. However, over time these small purchases do add up and can cause unwanted surprises. The easiest way to make this more simple would be to make it more fun, hence the idea of developing an app that made this experience fun became my goal.</string>
     <string name="text_about_contact">Contact me through my email or portfolio site!</string>
     <string name="title_contact">Contact Me</string>
+    <string name="text_download_resume">Download my resume:</string>
 
     <!-- Content Descriptions -->
     <string name="description_logo">App Logo</string>
@@ -21,11 +22,13 @@
     <string name="button_reset_password">Reset Password</string>
     <string name="button_contact_email">Email</string>
     <string name="button_contact_site">Site</string>
+    <string name="button_download_resume">Resume</string>
 
     <!-- Content Descriptions ("alt") tags -->
     <string name="content_app_logo">App Logo</string>
 
     <string name="cancelled_request_password_reset">Password reset cancelled</string>
+    <string name="ok">Ok</string>
 
     <!-- Dialog text -->
     <string name="dialog_button_no">No</string>
@@ -36,6 +39,8 @@
     <string name="dialog_message_reset_password">Cancel the password reset?</string>
     <string name="dialog_negative_request_password_reset">No</string>
     <string name="dialog_negative_reset_password">No</string>
+    <string name="dialog_permission_denied_download_resume_text">Cannot download resume because download permission was denied.</string>
+    <string name="dialog_permission_denied_download_resume_title">Download denied</string>
     <string name="dialog_positive_request_password_reset">Yes</string>
     <string name="dialog_positive_reset_password">Yes</string>
     <string name="dialog_title_clear_database">Clear Database?</string>
@@ -57,6 +62,7 @@
     <string name="failure_clear_database">Failed to clear database</string>
     <string name="failure_create_account">Account creation failed</string>
     <string name="failure_delete_account">Account deletion failed</string>
+    <string name="failure_download_resume">Downloading resume failed</string>
     <string name="failure_login">Login failed</string>
     <string name="failure_request_password_reset">Password reset request failed</string>
     <string name="failure_reset_password">Password reset failed</string>
@@ -73,6 +79,7 @@
     <string name="success_clear_database">Database cleared</string>
     <string name="success_create_account">Account created</string>
     <string name="success_delete_account">Account deleted</string>
+    <string name="success_download_resume">Resume downloaded</string>
     <string name="success_login">Login succeeded</string>
     <string name="success_request_password_reset">Password reset requested</string>
     <string name="success_reset_password">Password reset successfully</string>

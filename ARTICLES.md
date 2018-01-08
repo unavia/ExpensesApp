@@ -75,3 +75,16 @@ Dagger 2 is a Google library developed to simplify the process of injecting depe
 
 - [Dagger 2 Android Tutorial](https://causeyourestuck.io/2017/02/18/dagger2-android-tutorial/)
 - [Dagger 2 - The Simple Approach](https://android.jlelse.eu/dagger-2-the-simplest-approach-3e23502c4cab)
+
+### Download File
+Downloading a file (without using `DownloadManager`) involves an `InputStream` and opening a storage location (see **Permissions**).
+
+- [Android Hive - Download File](https://www.androidhive.info/2012/04/android-downloading-file-by-showing-progress-bar/)
+- [Stack Overflow - Download File](https://stackoverflow.com/questions/3028306/download-a-file-with-android-and-showing-the-progress-in-a-progressdialog)
+
+### Requesting Permission
+Saving a file to the Downloads folder requires requesting permission from the user and handling either outcome.
+
+- [Android - Request Permissions](https://developer.android.com/training/permissions/requesting.html)
+- [Stack Overflow - Check permissions in fRagment](https://stackoverflow.com/questions/40760625/how-to-check-permission-in-fragment)
+- [Stack Overflow - Read file from URI](https://stackoverflow.com/questions/38200282/android-os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed)
